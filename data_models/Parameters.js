@@ -5,6 +5,11 @@ class Parameters {
 
     constructor() { }
 
+    //Distance Matrix
+    get distanceMatrix() {
+        return this.#distanceMatrix;
+    }
+
     importDistanceMatrix() {
         throw new Error("Not Implemented");
     }
@@ -13,10 +18,7 @@ class Parameters {
         throw new Error("Not Implemented");
     }
 
-    get distanceMatrix() {
-        return this.#distanceMatrix;
-    }
-
+    //Frequency
     get frequency() {
         return this.#frequency;
     }
@@ -28,6 +30,7 @@ class Parameters {
         this.#frequency = value;
     }
 
+    //Points
     get points() {
         return this.#points;
     }
@@ -37,6 +40,13 @@ class Parameters {
             throw new Error(`Invalid Argument: Expected type 'Point' but got '${typeof (p)}'`);
 
         this.#points.push(p);
+        return this.#points
         //this.determineDistanceMatrix();
+    }
+
+    removePoint(index) {
+        if (index >= this.#points.length())
+            throw new Error(`Invalid Argument: Index '${index}' out of range`);
+        this.#points = this.#points.splice(index, 1)
     }
 }
