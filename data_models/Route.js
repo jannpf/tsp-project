@@ -1,4 +1,6 @@
-class Route {
+import Point from "./Point.js";
+
+export default class Route {
     #points = [];
     #distanceMatrix = new Map();
 

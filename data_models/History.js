@@ -1,3 +1,3 @@
-class History {
+export default class History {
     
 }

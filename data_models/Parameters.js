@@ -1,4 +1,6 @@
-class Parameters {
+import Point from "./Point.js";
+
+export default class Parameters {
     #points = [];
     #distanceMatrix = [];
     #frequency = 0;
