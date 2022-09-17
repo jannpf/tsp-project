@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../JS/gui.js"></script>
 </head>
 
-<body onload="initiate_canvas()">
+<body onload="initiate()">
     <div>
         <div>
             <div class="map-editorv4">
@@ -66,14 +66,8 @@
                                     class="frequency-help" />
                             </div>
                             <div class="frequency-slider">
-                                <div class="frequency-slider-bar">
-                                    <div class="frequency-slider-bar-background">
-                                        <img alt="MOVEFrequencySliderBarHandle3494"
-                                            src="../assets/MOVEFrequencySliderBarHandle3494-jaqn.png"
-                                            class="m-o-v-e-frequency-slider-bar-handle" />
-                                    </div>
-                                </div>
-                                <input type="text" placeholder="0,75" class="frequency-slider-input" />
+                                <input type="range" id="my-slider" min="0" max="100" value="50" oninput="change_slider()">
+                                <input type="number" id="slider-value" value="50" min="0" max="100"  onClick="this.select();" onchange="change_slider('text')">
                             </div>
                         </div>
                     </div>

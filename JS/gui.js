@@ -1,4 +1,30 @@
 
+//gets called once body is fully loaded
+function initiate(){
+    initiate_canvas();
+    change_slider();
+}
+
+//matches the slider with the text input
+function change_slider(fixed){
+
+const mySlider = document.getElementById("my-slider");
+const sliderValue = document.getElementById("slider-value");
+
+    if (fixed == "text") {
+        if(sliderValue.value > 100){
+            sliderValue.value = 100;
+            alert("Maximale Frequenz ist 100!")
+        }
+        mySlider.value = sliderValue.value
+    } else {
+        sliderValue.value = mySlider.value;
+    }
+
+    valPercent = (mySlider.value / mySlider.max)*100;
+    mySlider.style.background = 'linear-gradient(to right, #3264fe ${valPercent}%, #d5d5d5 ${valPercent}%)';
+}
+
 
 function initiate_canvas(){
 
