@@ -1,4 +1,6 @@
-class Parameters {
+import Point from "./Point.js";
+
+export default class Parameters {
     #points = new Array();
     #distanceMatrix = new Map();
     #frequency = 0;

@@ -1,4 +1,4 @@
-class Point {
+export default class Point {
     #id = 0;
     #x = 0;
     #y = 0;
