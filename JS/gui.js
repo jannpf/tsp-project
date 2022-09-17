@@ -12,11 +12,7 @@ const mySlider = document.getElementById("my-slider");
 const sliderValue = document.getElementById("slider-value");
 
     if (fixed == "text") {
-        if(sliderValue.value > 100){
-            sliderValue.value = 100;
-            alert("Maximale Frequenz ist 100!")
-        }
-        mySlider.value = sliderValue.value
+        sliderValue.value > 100 ? sliderValue.value = 100 : (sliderValue.value < 0 ? sliderValue.value = 0 : mySlider.value = sliderValue.value)
     } else {
         sliderValue.value = mySlider.value;
     }
