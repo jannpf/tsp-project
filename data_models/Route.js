@@ -2,7 +2,7 @@ import Point from "./Point.js";
 
 export default class Route {
     #points = [];
-    #distanceMatrix = [];
+    #distanceMatrix = new Map();
 
     /**
      * 
