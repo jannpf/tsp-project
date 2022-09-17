@@ -1,6 +1,7 @@
 class Point {
-    x = 0;
-    y = 0;
+    #id = 0;
+    #x = 0;
+    #y = 0;
 
     /**
      * 
@@ -8,37 +9,19 @@ class Point {
      * @param {Number} y 
      */
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        this.#x = x;
+        this.#y = y;
     }
 
     get x() {
-        return this.x;
+        return this.#x;
     }
 
     get y() {
-        return this.x;
+        return this.#y;
     }
 
-    /**
-     * 
-     * @param {Number} value 
-     */
-    set x(value) {
-        if (!typeof (value) === Number)
-            throw new Error(`Invalid Argument: Expected numerical value for Coordinate`);
-
-        this.x = value;
-    }
-
-    /**
-     * 
-     * @param {Number} value 
-     */
-    set y(value) {
-        if (!typeof (value) === Number)
-            throw new Error(`Invalid Argument: Expected numerical value for Coordinate`);
-
-        this.y = value;
+    get id() {
+        return this.#id;
     }
 }
