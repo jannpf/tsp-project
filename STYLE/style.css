@@ -274,6 +274,7 @@ body {
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 0px;
+  cursor: pointer
 }
 
 .b-u-t-t-o-n-import-button {
@@ -434,11 +435,12 @@ input[type="range"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   display: block;
-  width: 80%;
+  width: 75%;
   height: 8px;
   background-color: #d5d5d5;
   border-radius: 8px;
   outline: none;
+  margin-right: 5%;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -494,14 +496,14 @@ input[type="range"]:active::-webkit-slider-thumb {
   border: 3px solid #EE6C4D;
 }
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
 }
 
 
 input[type="number"]{
-  width: 13%;
+  width: 15%;
   position: relative;
   background-color: #EE6C4D;
   color: #ffffff;
@@ -546,6 +548,7 @@ input[type="number"]:focus{
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 3.5vh;
   justify-content: center;
+  cursor: pointer;
 }
 
 .b-u-t-t-o-n-start-button {

@@ -53,7 +53,7 @@ function draw_point(evt, Point) {
 
     if (evt !== 0) {
         var Point = getMousePos(canvas, evt);
-        Point.number = 12;
+        Point.number = Math.floor(Math.random()*50);
     }
 
     //marker with number inside
@@ -64,7 +64,7 @@ function draw_point(evt, Point) {
 
     ctx.fillStyle = "#FFFFFF"
     ctx.font = '20px poppins';
-    ctx.fillText(Point.number, 6, 21);
+    ctx.fillText(Point.number, 3, 21);
 
 }
 
