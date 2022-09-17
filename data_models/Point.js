@@ -8,7 +8,8 @@ class Point {
      * @param {Number} x 
      * @param {Number} y 
      */
-    constructor(x, y) {
+    constructor(id, x, y) {
+        this.#id = id;
         this.#x = x;
         this.#y = y;
     }
