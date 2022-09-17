@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TSP Editor</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../STYLE/style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/nvd5kwc.css">
+    <script type="text/javascript" src="../JS/gui.js"></script>
+</head>
+
+<body onload="initiate()">
+    <div>
+        <div>
+            <div class="map-editorv4">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <span class="text"><span>#TSP</span></span>
+                        <div class="navbar-inner-right">
+                            <div class="navbar-inner-right-tabs">
+                                <span class="text02"><span>Home</span></span>
+                                <span class="text04">
+                                    <span>Datenschutzerklärung</span>
+                                </span>
+                                <span class="text06"><span>Impressum</span></span>
+                            </div>
+                            <div class="navbar-inner-editor">
+                                <img alt="NavbarInnerEditorButton3493"
+                                    src="../assets/NavbarInnerEditorButton3493-t798.png"
+                                    class="navbar-inner-editor-button" />
+                                <span class="text08"><span>Editor</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img alt="HLineNavbar3493" src="../assets/hlinenavbar3493-i7po.svg" class="h-line-navbar" />
+                <div id="map-frame" class="map-frame">
+                    <canvas id="canvas" onmousedown="draw_point(event)"></canvas>
+                </div>
+                <div class="menu-bar-bottom">
+                    <div class="input-tab">
+                        <div class="import-tab">
+                            <img alt="BUTTONImportButton3493" src="../assets/BUTTONImportButton3493-1o1.png"
+                                class="b-u-t-t-o-n-import-button" />
+                            <div class="import-button-label">
+                                <span class="text10"><span>Import</span></span>
+                                <div class="import-icon">
+                                    <img alt="ImportIconVector23493" src="../assets/importiconvector23493-f5bj.svg"
+                                        class="import-icon-vector2" />
+                                    <img alt="ImportIconVector13493" src="../assets/importiconvector13493-82g.svg"
+                                        class="import-icon-vector1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="frequency-tab">
+                            <div class="frequency-label">
+                                <span class="text12"><span>Frequenz</span></span>
+                                <img alt="FrequencyHelp3564" src="../assets/frequencyhelp3564-taee.svg"
+                                    class="frequency-help" />
+                            </div>
+                            <div class="frequency-slider">
+                                <input type="range" id="my-slider" min="0" max="100" value="50" oninput="change_slider()">
+                                <input type="number" id="slider-value" value="50" min="0" max="100"  onClick="this.select();" onchange="change_slider('text')">
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="start_algorithm()" class="start-tab">
+                        <img alt="BUTTONStartButton3494" src="../assets/BUTTONStartButton3494-8kgb.png"
+                            class="b-u-t-t-o-n-start-button" />
+                        <span class="text14"><span>Start</span></span>
+                    </div>
+                    <div class="output-tab">
+                        <div class="output-tab-numbers">
+                            <div class="temperature-tab">
+                                <div class="temperature-label">
+                                    <span class="text16"><span>Temperatur</span></span>
+                                    <img alt="TemperatureHelp3564" src="../assets/temperaturehelp3564-auyd.svg"
+                                        class="temperature-help" />
+                                </div>
+                                <span class="text18"><span>5000</span></span>
+                            </div>
+                            <div class="length-tab">
+                                <div class="length-label">
+                                    <span class="text20"><span>Länge</span></span>
+                                    <img alt="LengthHelp3564" src="../assets/lengthhelp3564-ahai.svg"
+                                        class="length-help" />
+                                </div>
+                                <span class="text22"><span>2560 km</span></span>
+                            </div>
+                        </div>
+                        <div class="chart-tab">
+                            <div class="chart-label">
+                                <span class="text24">
+                                    <span>Temperatur Verlauf</span>
+                                </span>
+                                <img alt="ChartHelp3564" src="../assets/charthelp3564-hrxb.svg" class="chart-help" />
+                            </div>
+                            <div class="o-u-t-chart">
+                                <img src="https://play.teleporthq.io/static/svg/default-img.svg" class="xaxis" />
+                                <img alt="Yaxis3494" src="../assets/yaxis3494-2qch.svg" class="yaxis" />
+                                <img alt="Line3494" src="../assets/line3494-w0pg.svg" class="line" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <script src="" async defer></script>
+</body>
+
+</html>
