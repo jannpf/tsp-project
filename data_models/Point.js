@@ -20,6 +20,10 @@ class Point {
         return this.x;
     }
 
+    /**
+     * 
+     * @param {Number} value 
+     */
     set x(value) {
         if (!typeof (value) === Number)
             throw new Error(`Invalid Argument: Expected numerical value for Coordinate`);
@@ -27,6 +31,10 @@ class Point {
         this.x = value;
     }
 
+    /**
+     * 
+     * @param {Number} value 
+     */
     set y(value) {
         if (!typeof (value) === Number)
             throw new Error(`Invalid Argument: Expected numerical value for Coordinate`);
