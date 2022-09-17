@@ -1,6 +1,6 @@
 class Parameters {
-    #points = [];
-    #distanceMatrix = [];
+    #points = new Array();
+    #distanceMatrix = new Map();
     #frequency = 0;
 
     constructor() { }
@@ -14,8 +14,24 @@ class Parameters {
         throw new Error("Not Implemented");
     }
 
+    /**
+     * Calculate the distance matrix by determining the euclidean distance for each point combination
+     */
     determineDistanceMatrix() {
-        throw new Error("Not Implemented");
+        this.#distanceMatrix = new Set()
+        for(start in this.#points) {
+            distances = new Map()
+            for(end in this.#points) {
+                // determine euclidean distance for current pair of points
+                x_dist = start.x - end.x;
+                y_dist = start.y - end.y;
+                distance = Math.sqrt(x_dist ** 2 + y_dist ** 2)
+
+                // add distance to the point
+                distances.set(end.id, distance)
+            }
+            this.#distanceMatrix.set(start.id, distances)
+        }
     }
 
     //Frequency
