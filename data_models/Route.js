@@ -10,10 +10,11 @@ export default class Route {
      * @param {Array} distanceMatrix
      */
     constructor(points, distanceMatrix) {
-        if (!typeof (points) === Array || points.lenth <= 0 || !points.every(x => typeof (x) === Point))
+        if (!typeof (points) === Array || points.lenth <= 0) //|| !points.every(x => typeof (x) === Point))
             throw new Error(`Invalid Argument: Expected list of points`);
-        if (!typeof (distanceMatrix) === Array || distanceMatrix.lenth <= 0 || !distanceMatrix.every(x => typeof (x) === Number))
+        if (!typeof (distanceMatrix) === Array || distanceMatrix.length <= 0) // || !distanceMatrix.every(x => typeof (x) === Number))
             throw new Error(`Invalid Argument: Expected non-empty list of floats for distance matrix`);
+
         this.#points = points;
         this.#distanceMatrix = distanceMatrix;
     }
@@ -26,10 +27,10 @@ export default class Route {
      * Calculate total length of route based on the distance matrix
      */
     getLength() {
-        length = 0
-        for (let i = 1; i < this.#points.length(); i++) {
-            p1 = this.#points[i-1];
-            p2 = this.#points[i];
+        let length = 0
+        for (let i = 1; i < this.#points.length; i++) {
+            let p1 = this.#points[i - 1];
+            let p2 = this.#points[i];
             length += this.#distanceMatrix.get(p1.id).get(p2.id);
         }
         return length;

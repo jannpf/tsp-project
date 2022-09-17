@@ -22,7 +22,6 @@ export default class Parameters {
     determineDistanceMatrix() {
         this.#distanceMatrix = new Map();
         for(const start of this.#points) {
-            debugger;
             let distances = new Map();
             for(const end of this.#points) {
                 // determine euclidean distance for current pair of points
