@@ -49,4 +49,32 @@ export default class Route {
         this.#points[i2] = temp;
         return this.#points;
     }
+
+    /**
+     * Converts the Route into a gpx format
+     * 
+     * @returns {String} The route in gpx format
+     */
+    export_to_gpx() {
+        let xml_tag = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`
+        let gpx_start = `
+        <gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="TSP">
+        <metadata>
+        <time>${new Date().toISOString()}</time>
+        </metadata>
+        <trk>
+        <name>Travelling Salesman Route</name>
+        <desc>Total distance: ${this.getLength()}</desc>`
+
+        let segment = "<trkseg>";
+        this.#points.forEach(p => {
+            segment += `<trkpt lat="${p.x}" lon="${p.y}"></trkpt>`
+        })
+        segment += '</trkseg>'
+        let gpx_end = '</trk></gpx>';
+
+        let result = xml_tag + gpx_start + segment + gpx_end;
+
+        return result.replace(/\\"/g, '"');
+    }
 }
