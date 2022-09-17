@@ -49,7 +49,7 @@ class Parameters {
      * @param {Number} index 
      */
     removePoint(index) {
-        if (!typeof (index) != Number || index >= this.#points.length())
+        if (!typeof (index) === Number || index >= this.#points.length())
             throw new Error(`Invalid Argument: Index '${index}' out of range`);
         this.#points = this.#points.splice(index, 1)
     }
