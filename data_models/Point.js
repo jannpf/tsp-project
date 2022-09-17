@@ -4,7 +4,7 @@ export default class Point {
     #y = 0;
 
     /**
-     * 
+     * Creates a new Point Object
      * @param {Number} x 
      * @param {Number} y 
      */

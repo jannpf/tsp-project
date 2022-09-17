@@ -18,6 +18,7 @@ export default class Parameters {
 
     /**
      * Calculate the distance matrix by determining the euclidean distance for each point combination
+     * @returns {Map} The resulting distance matrix
      */
     determineDistanceMatrix() {
         this.#distanceMatrix = new Map();
@@ -34,6 +35,7 @@ export default class Parameters {
             }
             this.#distanceMatrix.set(start.id, distances);
         }
+        return this.#distanceMatrix;
     }
 
     //Frequency
@@ -42,8 +44,8 @@ export default class Parameters {
     }
 
     set frequency(value) {
-        if (value < 0)
-            throw new Error(`Invalid Argument: Frequency must be > 0`);
+        if (value < 0 || value > 10)
+            throw new Error(`Invalid Argument: Frequency must be between 0 and 10`);
 
         this.#frequency = value;
     }
@@ -54,8 +56,9 @@ export default class Parameters {
     }
 
     /**
-     * 
+     * Adds a new Point
      * @param {Point} p
+     * @returns {Array} The updated array of points
      */
     addPoint(p) {
         if (!typeof (p) == Point)
@@ -63,12 +66,12 @@ export default class Parameters {
 
         this.#points.push(p);
         return this.#points
-        //this.determineDistanceMatrix();
     }
 
     /**
-     * 
+     * Removes Point at index
      * @param {Number} index
+     * @returns {Array} The updated array of points
      */
     removePoint(index) {
         if (!typeof (index) === Number || index >= this.#points.length)

@@ -5,9 +5,10 @@ export default class Route {
     #distanceMatrix = new Map();
 
     /**
-     * 
+     * Creates a new Route Object
      * @param {Array} points 
      * @param {Array} distanceMatrix
+     * 
      */
     constructor(points, distanceMatrix) {
         if (!typeof (points) === Array || points.lenth <= 0) //|| !points.every(x => typeof (x) === Point))
@@ -36,6 +37,12 @@ export default class Route {
         return length;
     }
 
+    /**
+     * Swap points at i1 and i2
+     * @param {Number} i1 Index 1
+     * @param {Number} i2 Index 2
+     * @returns {Array} The updated array of points
+     */
     swapPoints(i1, i2) {
         var temp = this.#points[i1];
         this.#points[i1] = this.#points[i2];
