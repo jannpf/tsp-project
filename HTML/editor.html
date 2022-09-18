@@ -45,20 +45,38 @@
                 </div>
                 <div class="menu-bar-bottom">
                     <div class="input-tab">
-                        <div class="import-tab">
-                                <span class="import-text"><span>Import</span></span>
-                                <img src="../assets/Import-Icon-Vektor.svg"
-                                        class="import-icon-vector" />
+                        <div id="import-tab" class="import-tab" onclick="import_file(event)">
+                            <span class="import-text"><span>Import</span></span>
+                            <img src="../assets/Import-Icon-Vektor.svg" class="import-icon-vector" />
+                        </div>
+                        <!-- The Modal -->
+                        <div id="import-modal" class="modal">
+                            <div class="import-modal-header">
+                                <span class="import-modal-title">Import CSV</span>  
+                                <span onclick="close_import(event)" class="close-modal">&times;</span>  
+                                
+                            </div>
+                            <div class="import-modal-dropzone">
+                                <img class="import-modal-icon" src="" />
+                                <span class="import-modal-text">Dateien hier hinziehen</span>  
+                                <span class="import-modal-tooltip">Unterstütze Formate: .csv</span>  
+                                <input id="file" type='file' accept='.csv' onChange="openFile(event)">
+                            </div>
+                            <div class="import-modal-upload">
+                                <span class="import-modal-comit">Datei hochladen</span>
+                            </div>
+
                         </div>
                         <div class="frequency-tab">
                             <div class="frequency-label">
                                 <span class="text12"><span>Frequenz</span></span>
-                                <img src="../assets/Tooltip-Icon.svg"
-                                    class="frequency-help" />
+                                <img src="../assets/Tooltip-Icon.svg" class="frequency-help" />
                             </div>
                             <div class="frequency-slider">
-                                <input type="range" id="my-slider" min="0" max="100" value="50" oninput="change_slider()">
-                                <input type="number" id="slider-value" value="50" min="0" max="100"  onClick="this.select();" onchange="change_slider('text')">
+                                <input type="range" id="my-slider" min="0" max="100" value="50"
+                                    oninput="change_slider()">
+                                <input type="number" id="slider-value" value="50" min="0" max="100"
+                                    onClick="this.select();" onchange="change_slider('text')">
                             </div>
                         </div>
                     </div>
@@ -70,16 +88,14 @@
                             <div class="temperature-tab">
                                 <div class="temperature-label">
                                     <span class="text16"><span>Temperatur</span></span>
-                                    <img src="../assets/Tooltip-Icon.svg"
-                                        class="temperature-help" />
+                                    <img src="../assets/Tooltip-Icon.svg" class="temperature-help" />
                                 </div>
                                 <span class="text18"><span>5000</span></span>
                             </div>
                             <div class="length-tab">
                                 <div class="length-label">
                                     <span class="text20"><span>Länge</span></span>
-                                    <img src="../assets/Tooltip-Icon.svg"
-                                        class="length-help" />
+                                    <img src="../assets/Tooltip-Icon.svg" class="length-help" />
                                 </div>
                                 <span class="text22"><span>2560 km</span></span>
                             </div>
@@ -107,10 +123,10 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-    <script  type="module" src="../data_models/Parameters.js"></script>
-    <script type="module"  src="../data_models/Route.js"></script>
-    <script  type="module" src="../data_models/Point.js"></script>
+    <script type="module" src="../data_models/Parameters.js"></script>
+    <script type="module" src="../data_models/Route.js"></script>
+    <script type="module" src="../data_models/Point.js"></script>
     <script type="module" src="../gui/gui.js" defer></script>
-</body>
+    </body>
 
 </html>

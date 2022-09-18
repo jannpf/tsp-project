@@ -216,7 +216,6 @@ body {
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 20px;
-  z-index: 10;
 }
 
 #canvas {
@@ -233,7 +232,7 @@ body {
   align-self: center;
   box-sizing: border-box;
   align-items: center;
-  flex: 1,1;
+  flex: 1, 1;
   border-color: transparent;
   padding: 0px;
   gap: 2vw;
@@ -248,7 +247,7 @@ body {
   justify-content: flex-end;
   gap: 2vh;
   align-items: center;
-  flex: 1,0;
+  flex: 1, 0;
   width: 20vw;
   height: 15vh;
   display: flex;
@@ -296,6 +295,163 @@ body {
   align-self: center;
   box-sizing: border-box;
 }
+
+.modal {
+  flex-direction: column;
+  align-items: center;
+  padding: 3vh 2vw 0 2vw;
+  gap: 3vh;
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 25vw;
+  height: 50vh;
+  overflow: hidden;
+  background: #FFFFFF;
+  box-shadow: 0px 16px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 23px;
+}
+
+/* Modal Content/Box */
+.import-modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3vh;
+  width: 100%;
+  height: 7vh;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  border-bottom: 1px solid #676767;
+}
+
+.import-modal-title {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 28px;
+  flex: none;
+  padding-left: 6vw;
+  order: 0;
+  flex-grow: 1;
+  align-items: center;
+  text-align: center;
+}
+
+/* The Close Button */
+.close-modal {
+  width: 3vw;
+  align-items: center;
+  text-align: center;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.import-modal-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vh;
+  width: 100%;
+  height: 24vh;
+  background: #ee6d4d5f;
+  border-radius: 23px;
+  border: 1px dashed #000000;
+  flex: none;
+  order: 1;
+  flex-grow: 0, 0;
+
+}
+
+.import-modal-text {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 28px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  align-items: center;
+  text-align: center;
+}
+
+.import-modal-tooltip {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+
+  align-items: center;
+  text-align: center;
+  color: #676767;
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+
+}
+
+.import-modal-upload {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 7vh;
+  border-color: transparent;
+  background-color: #263238;
+  border-radius: 23px;
+  margin: 0px;
+  cursor: pointer;
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+}
+
+.import-modal-comit {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+}
+
+
+
+
+
+
+
+
+
 
 .frequency-tab {
   width: 100%;
@@ -463,7 +619,7 @@ input[type="number"]:focus {
 
 .start-tab {
   display: flex;
-  flex: 1,0;
+  flex: 1, 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -490,7 +646,7 @@ input[type="number"]:focus {
 }
 
 .output-tab {
-  flex: 1,0;
+  flex: 1, 0;
   width: 20vw;
   height: 17vh;
   display: flex;
