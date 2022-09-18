@@ -224,143 +224,76 @@ body {
 }
 
 .menu-bar-bottom {
-  width: auto;
+  width: 100%;
   height: 18vh;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   position: absolute;
   align-self: center;
   box-sizing: border-box;
-  align-items: flex-end;
-  flex-shrink: 0;
-  padding-top: 0px;
+  align-items: center;
+  flex: 1,1;
   border-color: transparent;
-  margin-right: 0;
-  padding-left: 6vw;
+  padding: 0px;
+  gap: 2vw;
   margin-bottom: 2vh;
-  padding-right: 6vw;
-  flex-direction: row;
-  padding-bottom: 0;
   bottom: 0;
-  justify-content: center;
 }
 
 .input-tab {
-  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2vh;
+  align-items: center;
+  flex: 1,0;
   width: 20vw;
   height: 15vh;
   display: flex;
-  padding: var(--dl-space-space-halfunit);
   position: relative;
-  flex-grow: 1;
-  align-self: stretch;
+  flex-grow: 0;
   box-sizing: border-box;
-  align-items: flex-start;
   border-color: transparent;
-  margin-right: 2vw;
-  border-radius: 0px 0px 0px 0px;
   margin-bottom: 0;
-  flex-direction: column;
 }
 
 .import-tab {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
   width: 100%;
   height: 5vh;
-  display: flex;
   position: relative;
-  align-self: stretch;
-  box-sizing: border-box;
-  align-items: flex-start;
   border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0px;
+  background-color: #263238;
+  border-radius: 23px;
+  margin: 0px;
   cursor: pointer
 }
 
-.b-u-t-t-o-n-import-button {
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 5vh;
-  position: absolute;
-  box-sizing: border-box;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 23px;
-  margin-bottom: 0;
-}
-
-.import-button-label {
-  top: 20%;
-  left: 0px;
-  width: 100%;
-  bottom: Space-HalfUnit;
-  margin: auto;
-  display: flex;
-  position: absolute;
-  box-sizing: border-box;
-  text-align: center;
-  align-items: center;
-  flex-shrink: 0;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  justify-content: center;
-}
-
-.text10 {
+.import-text {
   color: rgba(255, 255, 255, 1);
-  height: auto;
-  font-size: 18px;
-  align-self: auto;
+  font-size: 3vh;
+  align-self: center;
   font-style: SemiBold;
   text-align: center;
   font-family: Poppins;
   font-weight: 600;
   line-height: normal;
   font-stretch: normal;
-  margin-right: 15px;
-  margin-bottom: 0;
   text-decoration: none;
 }
 
-.import-icon {
-  width: 16px;
-  height: 20.2296085357666px;
-  display: flex;
-  padding: 0;
+.import-icon-vector {
+  width: auto;
+  height: 3vh;
   position: relative;
-  align-self: auto;
-  box-sizing: border-box;
-  align-items: flex-start;
-  flex-shrink: 1;
-  border-color: transparent;
-  border-style: none;
-  border-width: 0;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  flex-direction: row;
-  justify-content: flex-start;
-  background-color: transparent;
-}
-
-.import-icon-vector2 {
-  top: 0px;
-  left: 0px;
-  width: 16px;
-  height: 20px;
-  position: absolute;
-  box-sizing: border-box;
-}
-
-.import-icon-vector1 {
-  top: 9.10334300994873px;
-  left: 4.89757776260376px;
-  width: 6px;
-  height: 6px;
-  position: absolute;
+  align-self: center;
   box-sizing: border-box;
 }
 
@@ -370,7 +303,6 @@ body {
   display: flex;
   position: relative;
   flex-grow: 1;
-  align-self: stretch;
   box-sizing: border-box;
   align-items: flex-start;
   border-color: transparent;
@@ -389,7 +321,6 @@ body {
   border-color: transparent;
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 7px;
 }
 
 .text12 {
@@ -495,14 +426,15 @@ input[type="range"]:active::-webkit-slider-thumb {
   background-color: #ffffff;
   border: 3px solid #EE6C4D;
 }
+
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 
-input[type="number"]{
+input[type="number"] {
   width: 15%;
   position: relative;
   background-color: #EE6C4D;
@@ -517,11 +449,11 @@ input[type="number"]{
   border-radius: 5px;
   border-width: 3px;
   border-color: #EE6C4D;
-  border-style:solid;
+  border-style: solid;
 
 }
 
-input[type="number"]:focus{
+input[type="number"]:focus {
   background-color: #ffffff;
   color: #EE6C4D;
   border-color: #EE6C4D;
@@ -529,79 +461,43 @@ input[type="number"]:focus{
 
 }
 
-
-
 .start-tab {
-  flex: 1;
-  width: 20vw;
-  height: 10vh;
   display: flex;
-  position: relative;
-  flex-grow: 1;
-  box-sizing: border-box;
-  margin-top: 3.5vh;
-  align-items: center;
-  flex-shrink: 0;
-  margin-left: 2vw;
-  border-color: transparent;
-  margin-right: 2vw;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 3.5vh;
+  flex: 1,0;
+  flex-direction: column;
   justify-content: center;
-  cursor: pointer;
-}
-
-.b-u-t-t-o-n-start-button {
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  width: auto;
-  bottom: 0px;
-  height: 100%;
-  margin: auto;
-  position: absolute;
-  box-sizing: border-box;
+  align-items: center;
+  position: relative;
   border-color: transparent;
   border-radius: 23px;
+  cursor: pointer;
+  background-color: #EE6C4D;
+  border-color: transparent;
+  width: 20vw;
+  height: 10vh;
+  margin: 3.5vh;
 }
 
-.text14 {
-  top: 20%;
-  left: 15%;
-  color: rgba(255, 255, 255, 1);
-  right: 15%;
-  width: auto;
-  bottom: 20%;
-  height: auto;
-  margin: auto;
-  position: absolute;
-  font-size: 40px;
-  align-self: auto;
-  font-style: SemiBold;
-  margin-top: auto;
-  text-align: center;
-  font-family: Poppins;
+.start-button-text {
+  color: #ffffff;
+  font-family: 'Poppins';
+  font-style: normal;
   font-weight: 600;
-  line-height: normal;
-  margin-left: auto;
-  font-stretch: normal;
-  margin-right: auto;
-  margin-bottom: 0px;
-  text-decoration: none;
+  font-size: 40px;
+  line-height: 60px;
+  text-align: center;
+
 }
 
 .output-tab {
-  flex: 1;
+  flex: 1,0;
   width: 20vw;
   height: 17vh;
   display: flex;
   padding: var(--dl-space-space-halfunit);
   position: relative;
-  flex-grow: 1;
-  align-self: stretch;
   box-sizing: border-box;
   align-items: flex-end;
-  margin-left: 2vw;
   border-color: transparent;
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
