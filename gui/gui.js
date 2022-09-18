@@ -18,17 +18,12 @@ window.addEventListener('resize', () => {
     initiate_canvas();
 })
 
-
-
-/**
- * Handles Modal closing
- */
-document.addEventListener('click', function handleClickOutsideModal(event) {
-    window.import_tab = document.getElementById("import-tab");
-    if (!import_modal.contains(event.target) && !import_tab.contains(event.target)) {
+window.addEventListener('mouseup',function(event){
+    if(!import_modal.contains(event.target)){
         import_modal.style.display = 'none';
     }
-});
+});  
+
 
 const parameters = new Parameters();
 

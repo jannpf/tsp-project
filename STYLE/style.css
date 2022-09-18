@@ -301,7 +301,7 @@ body {
   align-items: center;
   padding: 3vh 2vw 0 2vw;
   gap: 3vh;
-  display: flex;
+  display: none;
   position: fixed;
   z-index: 1;
   left: 50%;
