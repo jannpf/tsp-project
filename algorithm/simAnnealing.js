@@ -1,36 +1,55 @@
+import Route from "../data_models/Route";
+
 class SimulatedAnnealing {
     
     #temperature = 1000;
     #coolingFactor = 0.995;
 
-    optimize(startingRoute) {
+    createStartingRoute(points, distanceMatrix) {
+        startingRoute = new Route(points, distanceMatrix);
+    }
 
-        oldRoute = startingRoute;
+    sleep(milliseconds) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
+    async optimize(startingRoute) {
+
+        currentRoute = startingRoute;
 
         while(this.#temperatur > 1) {
-
-            indexOfPointA = 0;
-            indexOfPointB = 0;
-            
-            while(indexOfPointA == indexOfPointB) {
-                indexOfPointA = Math.floor(Math.random()*oldRoute.size());
-                indexOfPointB = Math.floor(Math.random()*oldRoute.size());
-            }
-
-            newRoute = oldRoute.swapTwoPoints(indexOfPointA, indexOfPointB);
-            
-            if(newRoute.length() < oldRoute.length()) {
-                oldRoute = newRoute;
-            } else {
-                difference = newRoute.length() - oldRoute.length();
-                probabilityFactor = Math.exp(difference / temperature);
-
-                if(probabilityFactor < Math.random()) {
-                    oldRoute = newRoute;
+            if(processControl.status == "running") {
+                indexOfPointA = 0;
+                indexOfPointB = 0;
+                
+                while(indexOfPointA == indexOfPointB) {
+                    indexOfPointA = Math.floor(Math.random()*currentRoute.getPoints().length);
+                    indexOfPointB = Math.floor(Math.random()*currentRoute.getPoints().length);
                 }
-            }
 
-            this.#temperature = this.#temperature * this.#coolingFactor;
-        }        
+                newRoute = currentRoute;
+
+                newRoute.swapPoints(indexOfPointA, indexOfPointB);
+                
+                if(newRoute.length() < currentRoute.length()) {
+                    currentRoute = newRoute;
+                } else {
+                    difference = newRoute.length() - currentRoute.getPoints().length;
+                    probabilityFactor = Math.exp(difference / temperature);
+
+                    if(probabilityFactor < Math.random()) {
+                        currentRoute = newRoute;
+                    }
+                }
+
+                this.#temperature = this.#temperature * this.#coolingFactor;
+
+                await this.sleep(Parameters.frequency());
+
+                gui.drawRoute(currentRoute);
+            } else {
+                break;
+            }
+        }
     }
 }
