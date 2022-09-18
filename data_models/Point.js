@@ -1,36 +1,28 @@
-class Point {
-    x = 0;
-    y = 0;
+export default class Point {
+    #id = 0;
+    #x = 0;
+    #y = 0;
 
     /**
-     * 
+     * Creates a new Point Object
      * @param {Number} x 
      * @param {Number} y 
      */
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(id, x, y) {
+        this.#id = id;
+        this.#x = x;
+        this.#y = y;
     }
 
     get x() {
-        return this.x;
+        return this.#x;
     }
 
     get y() {
-        return this.x;
+        return this.#y;
     }
 
-    set x(value) {
-        if (!typeof (value) === Number)
-            throw new Error(`Invalid Argument: Expected numerical value for Coordinate`);
-
-        this.x = value;
-    }
-
-    set y(value) {
-        if (!typeof (value) === Number)
-            throw new Error(`Invalid Argument: Expected numerical value for Coordinate`);
-
-        this.y = value;
+    get id() {
+        return this.#id;
     }
 }
