@@ -13,10 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../STYLE/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/nvd5kwc.css">
-    <script type="text/javascript" src="../gui/gui.js"></script>
 </head>
 
-<body onload="initiate()">
+<body">
     <div>
         <div>
             <div class="map-editorv4">
@@ -42,7 +41,7 @@
                 </div>
                 <img alt="HLineNavbar3493" src="../assets/hlinenavbar3493-i7po.svg" class="h-line-navbar" />
                 <div id="map-frame" class="map-frame">
-                    <canvas id="canvas" onmousedown="draw_point(event)"></canvas>
+                    <canvas id="canvas" onmousedown="click_canvas(event)"></canvas>
                 </div>
                 <div class="menu-bar-bottom">
                     <div class="input-tab">
@@ -108,7 +107,10 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-    <script src="" async defer></script>
+    <script  type="module" src="../data_models/Parameters.js"></script>
+    <script type="module"  src="../data_models/Route.js"></script>
+    <script  type="module" src="../data_models/Point.js"></script>
+    <script type="module" src="../gui/gui.js" defer></script>
 </body>
 
 </html>
