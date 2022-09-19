@@ -4,6 +4,7 @@ export default class Parameters {
     #points = new Array();
     #distanceMatrix = new Map();
     #frequency = 0;
+    #distanceMatrixImported = false;
 
     constructor() { }
 
@@ -12,15 +13,15 @@ export default class Parameters {
         return this.#distanceMatrix;
     }
 
-    importDistanceMatrix() {
-        throw new Error("Not Implemented");
-    }
-
     /**
      * Calculate the distance matrix by determining the euclidean distance for each point combination
      * @returns {Map} The resulting distance matrix
      */
     determineDistanceMatrix() {
+        if (this.#distanceMatrixImported) {
+            return this.#distanceMatrix;
+        }
+
         this.#distanceMatrix = new Map();
         for (const start of this.#points) {
             let distances = new Map();
@@ -102,29 +103,50 @@ export default class Parameters {
         // clear current points
         this.#points = new Array();
 
+        // clear current distance matrix to avoid having old data
+        this.#distanceMatrix = new Map();
+        this.#distanceMatrixImported = false
+
         // create points from the first two columns
         csvData.forEach(line => {
-            if (line[0] && line[1]) {
-                this.#points.push(new Point(id, line[0], line[1]));
-                id++;
+            let x = parseFloat(line[0])
+            let y = parseFloat(line[1])
+            if (isNaN(x) || isNaN(y)) {
+                this.#points = new Array();
+                throw new Error("Unable to parse coordinates: not a number");
             }
+            this.#points.push(new Point(id, x, y));
+            id++;
         })
 
-        // check if a distance matrix is included in the file 
-        let contains_dm = csvData.every(line => line.length == (this.#points.length + 2))
-
-        // if yes, parse the distance matrix
-        if (contains_dm) {
-            // clear current distance matrix
-            this.#distanceMatrix = new Map();
-
-            // construct new distance matrix line by line
-            csvData.forEach((line, lineIndex) => {
-                let distances = new Map();
-                line.slice(2).forEach((x, i) => distances.set(i, x));
-                this.#distanceMatrix.set(lineIndex, distances);
-            })
+        // import distance matrix, if included in the file 
+        if (csvData.every(line => line.length == (this.#points.length + 2))) {
+            this.importDistanceMatrix(csvData)
         }
         return this.#points;
+    }
+
+    /**
+     * Imports the distance matrix from the given
+     * @param {Array} csvData 
+     */
+    importDistanceMatrix(csvData) {
+        // construct new distance matrix line by line
+        csvData.forEach((line, lineIndex) => {
+            let distances = new Map();
+            // parse distances for this starting point
+            line.slice(2).forEach((x, i) => {
+                let distance = parseFloat(x);
+                // throw error if distance matrix contains non-numeric types
+                if (isNaN(distance)) {
+                    // revert changes
+                    this.#distanceMatrix = new Map();
+                    this.#distanceMatrixImported = false;
+                    throw new Error("Unable to parse distance matrix: not a number");
+                }
+                distances.set(i, distance)
+            });
+            this.#distanceMatrix.set(lineIndex, distances);
+        })
     }
 }
