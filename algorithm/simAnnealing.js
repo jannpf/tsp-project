@@ -5,10 +5,6 @@ class SimulatedAnnealing {
     #temperature = 1000;
     #coolingFactor = 0.995;
 
-    createStartingRoute(points, distanceMatrix) {
-        startingRoute = new Route(points, distanceMatrix);
-    }
-
     sleep(milliseconds) {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
