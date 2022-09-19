@@ -64,7 +64,7 @@ export default class Route {
         </metadata>
         <trk>
         <name>Travelling Salesman Route</name>
-        <desc>Total distance: ${this.getLength()}</desc>`
+        <desc>Total distance: ${this.getLength()}km</desc>`
 
         let segment = "<trkseg>";
         this.#points.forEach(p => {
