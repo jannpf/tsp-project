@@ -25,4 +25,14 @@ export default class Point {
     get id() {
         return this.#id;
     }
+
+    /**
+     * Returns the euclidean distance to the given point
+     * @param {Point} p 
+     */
+    getDistance(p) {
+        let x_dist = this.#x - p.x;
+        let y_dist = this.#y - p.y;
+        return Math.sqrt(x_dist ** 2 + y_dist ** 2);
+    }
 }
