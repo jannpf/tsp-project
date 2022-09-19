@@ -1,5 +1,6 @@
 import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
+import Route from "../data_models/Route.js";
 
 /**
  * Initiates JS-controlled Elements on window-load
@@ -102,9 +103,47 @@ function draw_parameters_points(param) {
     ctx.resetTransform();
     ctx.fillStyle = "#FFFFFF";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log(canvas.width + " " + canvas.height)
 
     param.points.forEach(p => {
+        draw_point(p);
+    });
+}
+
+/**
+ * Draws a Route w/ Connections and Points onto the main Canvas
+ * @param {Route} r 
+ */
+function draw_route(r){
+
+    if (!typeof (r) == Route) {
+        throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
+    }
+
+    //clear and reset Canvas
+    ctx.resetTransform();
+    ctx.fillStyle = "#FFFFFF";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = "grey";
+    ctx.lineWidth = 2;
+
+    //connect all points in order
+    for (let i = 0; i < r.points.length-1; i++) {
+        
+        ctx.beginPath();
+        ctx.moveTo(r.points[i].x, r.points[i].y);
+        ctx.lineTo(r.points[i+1].x, r.points[i+1].y);
+        ctx.stroke();
+    }
+    //connect last point to first
+    ctx.beginPath();
+    ctx.moveTo(r.points[r.points.length - 1].x, r.points[r.points.length - 1].y);
+    ctx.lineTo(r.points[0].x, r.points[0].y);
+    ctx.stroke();
+
+
+    //draw Pins for the Points with ID
+    r.points.forEach(p => {
         draw_point(p);
     });
 }
@@ -144,7 +183,6 @@ window.click_canvas = function click_canvas(evt) {
         parameters.addPoint(new Point(last_id + 1, temp.x, temp.y));
     }
     draw_parameters_points(parameters);
-    console.log(parameters.points)
 }
 /**
  * Calculates the distance between two Points
@@ -163,8 +201,9 @@ function get_distance_two_points(a, b) {
  * Starts Algorithm
  */
 window.start_algorithm = function start_algorithm() {
-    update_info();
-    alert("started")
+    
+    var route = new Route(parameters.points,parameters.determineDistanceMatrix());
+    draw_route(route);
 }
 
 window.import_file = function import_file(evt) {
