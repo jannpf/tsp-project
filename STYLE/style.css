@@ -727,7 +727,7 @@ input[type="number"]:focus {
   margin-bottom: 0;
 }
 
-.text18 {
+.temperature-text {
   color: var(--dl-color-red-red);
   height: auto;
   font-size: 28px;
@@ -796,7 +796,7 @@ input[type="number"]:focus {
   margin-bottom: 0;
 }
 
-.text22 {
+.length-text {
   color: var(--dl-color-black-200);
   height: auto;
   font-size: 28px;

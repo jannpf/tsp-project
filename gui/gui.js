@@ -163,14 +163,8 @@ function get_distance_two_points(a, b) {
  * Starts Algorithm
  */
 window.start_algorithm = function start_algorithm() {
+    update_info();
     alert("started")
-}
-
-function initiate_modals() {
-    // Get the modal
-
-
-
 }
 
 window.import_file = function import_file(evt) {
@@ -181,4 +175,17 @@ window.close_import = function close_import(evt) {
 
     window.close_modal = document.getElementsByClassName("close-modal");
     import_modal.style.display = "none";
+}
+
+/**
+ * Updates the Length and Temperature displayed
+ * @param {Number} length 
+ * @param {Number} temperature 
+ */
+function update_info(length, temperature){
+    window.document.getElementById("length-text").innerText=length;
+    window.document.getElementById("temperature-text").innerText=temperature;
+
+    //TODO
+    //Add Temperature Graph via. 2nd Canvas
 }
