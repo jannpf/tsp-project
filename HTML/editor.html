@@ -52,17 +52,20 @@
                         <!-- The Modal -->
                         <div id="import-modal" class="modal">
                             <div class="import-modal-header">
-                                <span class="import-modal-title">Import CSV</span>  
-                                <span onclick="close_import(event)" class="close-modal">&times;</span>  
-                                
+                                <span class="import-modal-title">Import CSV</span>
+                                <span onclick="close_import(event)" class="close-modal">&times;</span>
+
                             </div>
-                            <div class="import-modal-dropzone">
+                            <div class="import-modal-dropzone" id="drop_zone" ondrop="dropHandler(event);"
+                                ondragover="dragOverHandler(event);" onclick="select_file(event);">
                                 <img class="import-modal-icon" src="" />
-                                <span class="import-modal-text">Dateien hier hinziehen</span>  
-                                <span class="import-modal-tooltip">Unterstütze Formate: .csv</span>  
-                                <input id="file" type='file' accept='.csv' onChange="openFile(event)">
+                                <span id="import-placeholder" class="import-modal-text">Datei hier hinziehen oder
+                                    klicken</span>
+                                <span id="import-tooltip" class="import-modal-tooltip">Unterstütze Formate: .csv</span>
+                                <input class="file-input" id="file" type='file' accept='.csv'
+                                    onchange="open_file(event)">
                             </div>
-                            <div class="import-modal-upload">
+                            <div class="import-modal-upload" id="import-modal-upload">
                                 <span class="import-modal-comit">Datei hochladen</span>
                             </div>
 
@@ -87,7 +90,7 @@
                         <div class="output-tab-numbers">
                             <div class="temperature-tab">
                                 <div class="temperature-label">
-                                    <span  class="text16"><span>Temperatur</span></span>
+                                    <span class="text16"><span>Temperatur</span></span>
                                     <img src="../assets/Tooltip-Icon.svg" class="temperature-help" />
                                 </div>
                                 <span class="temperature-text"><span id="temperature-text">5000</span></span>
@@ -97,7 +100,7 @@
                                     <span class="text20"><span>Länge</span></span>
                                     <img src="../assets/Tooltip-Icon.svg" class="length-help" />
                                 </div>
-                                <span  class="length-text"><span id ="length-text">2560 km</span></span>
+                                <span class="length-text"><span id="length-text">2560 km</span></span>
                             </div>
                         </div>
                         <div class="chart-tab">

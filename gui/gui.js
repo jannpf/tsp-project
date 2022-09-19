@@ -19,11 +19,11 @@ window.addEventListener('resize', () => {
     initiate_canvas();
 })
 
-window.addEventListener('mouseup',function(event){
-    if(!import_modal.contains(event.target)){
+window.addEventListener('mouseup', function (event) {
+    if (!import_modal.contains(event.target)) {
         import_modal.style.display = 'none';
     }
-});  
+});
 
 
 const parameters = new Parameters();
@@ -113,7 +113,7 @@ function draw_parameters_points(param) {
  * Draws a Route w/ Connections and Points onto the main Canvas
  * @param {Route} r 
  */
-function draw_route(r){
+function draw_route(r) {
 
     if (!typeof (r) == Route) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
@@ -128,11 +128,11 @@ function draw_route(r){
     ctx.lineWidth = 2;
 
     //connect all points in order
-    for (let i = 0; i < r.points.length-1; i++) {
-        
+    for (let i = 0; i < r.points.length - 1; i++) {
+
         ctx.beginPath();
         ctx.moveTo(r.points[i].x, r.points[i].y);
-        ctx.lineTo(r.points[i+1].x, r.points[i+1].y);
+        ctx.lineTo(r.points[i + 1].x, r.points[i + 1].y);
         ctx.stroke();
     }
     //connect last point to first
@@ -201,8 +201,8 @@ function get_distance_two_points(a, b) {
  * Starts Algorithm
  */
 window.start_algorithm = function start_algorithm() {
-    
-    var route = new Route(parameters.points,parameters.determineDistanceMatrix());
+
+    var route = new Route(parameters.points, parameters.determineDistanceMatrix());
     draw_route(route);
 }
 
@@ -216,14 +216,78 @@ window.close_import = function close_import(evt) {
     import_modal.style.display = "none";
 }
 
+window.dropHandler = function dropHandler(ev) {
+    console.log('File(s) dropped');
+
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+
+    const file = ev.dataTransfer.files[0];
+    if (file.type == "text/csv") {
+
+        readfile(file);
+
+        window.document.getElementById("import-modal-upload").style.display = "flex";
+        window.document.getElementById("import-placeholder").style.display = "none";
+        window.document.getElementById("import-tooltip").style.display = "none";
+    } else {
+        window.document.getElementById("import-placeholder").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
+        throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
+    }
+
+    console.log("log: " + file.name);
+
+}
+
+window.dragOverHandler = function dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+}
+
+window.select_file = function select_file(ev) {
+
+    window.document.getElementById("file").click();
+
+}
+window.open_file = function open_file(ev) {
+
+    console.log(ev.target.files[0])
+
+    const file = ev.target.files[0];
+    if (file.type == "text/csv") {
+
+        readfile(file);
+
+        window.document.getElementById("import-modal-upload").style.display = "flex";
+        window.document.getElementById("import-placeholder").style.display = "none";
+        window.document.getElementById("import-tooltip").style.display = "none";
+    } else {
+        window.document.getElementById("import-placeholder").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
+        throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
+    }
+    console.log("log: " + file.name);
+
+}
+
+
+
+
+
+
+
+
+
+
 /**
  * Updates the Length and Temperature displayed
  * @param {Number} length 
  * @param {Number} temperature 
  */
-function update_info(length, temperature){
-    window.document.getElementById("length-text").innerText=length;
-    window.document.getElementById("temperature-text").innerText=temperature;
+function update_info(length, temperature) {
+    window.document.getElementById("length-text").innerText = length;
+    window.document.getElementById("temperature-text").innerText = temperature;
 
     //TODO
     //Add Temperature Graph via. 2nd Canvas

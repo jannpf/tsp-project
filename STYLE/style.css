@@ -299,7 +299,7 @@ body {
 .modal {
   flex-direction: column;
   align-items: center;
-  padding: 3vh 2vw 0 2vw;
+  padding: 3vh 2vw;
   gap: 3vh;
   display: none;
   position: fixed;
@@ -377,7 +377,7 @@ body {
   border: 1px dashed #000000;
   flex: none;
   order: 1;
-  flex-grow: 0, 0;
+  flex-grow: 1;
 
 }
 
@@ -410,8 +410,13 @@ body {
 
 }
 
+.file-input{
+  display: none;
+
+}
+
 .import-modal-upload {
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;
