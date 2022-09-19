@@ -228,10 +228,11 @@ window.dropHandler = function dropHandler(ev) {
         //readfile(file);
 
         window.document.getElementById("import-modal-upload").style.display = "flex";
+        window.document.getElementById("import-placeholder").style.display = "none";
         window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
-        window.document.getElementById("import-tooltip").style.display = "none";
+
     } else {
-        window.document.getElementById("import-placeholder").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
+        window.document.getElementById("import-tooltip").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
         throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
     }
 
@@ -264,20 +265,12 @@ window.open_file = function open_file(ev) {
         window.document.getElementById("import-placeholder").style.display = "none";
         window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
     } else {
-        window.document.getElementById("import-placeholder").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
+        window.document.getElementById("import-tooltip").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
         throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
     }
     console.log("log: " + file.name);
 
 }
-
-
-
-
-
-
-
-
 
 
 /**
