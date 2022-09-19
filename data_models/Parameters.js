@@ -25,13 +25,8 @@ export default class Parameters {
         for (const start of this.#points) {
             let distances = new Map();
             for (const end of this.#points) {
-                // determine euclidean distance for current pair of points
-                let x_dist = start.x - end.x;
-                let y_dist = start.y - end.y;
-                let distance = Math.sqrt(x_dist ** 2 + y_dist ** 2);
-
                 // add distance to the point
-                distances.set(end.id, distance);
+                distances.set(end.id, start.getDistance(end));
             }
             this.#distanceMatrix.set(start.id, distances);
         }
