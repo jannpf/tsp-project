@@ -13,10 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../STYLE/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/nvd5kwc.css">
-    <script type="text/javascript" src="../gui/gui.js"></script>
 </head>
 
-<body onload="initiate()">
+<body">
     <div>
         <div>
             <div class="map-editorv4">
@@ -42,57 +41,66 @@
                 </div>
                 <img alt="HLineNavbar3493" src="../assets/hlinenavbar3493-i7po.svg" class="h-line-navbar" />
                 <div id="map-frame" class="map-frame">
-                    <canvas id="canvas" onmousedown="draw_point(event)"></canvas>
+                    <canvas id="canvas" onmousedown="click_canvas(event)"></canvas>
                 </div>
                 <div class="menu-bar-bottom">
                     <div class="input-tab">
-                        <div class="import-tab">
-                            <img alt="BUTTONImportButton3493" src="../assets/BUTTONImportButton3493-1o1.png"
-                                class="b-u-t-t-o-n-import-button" />
-                            <div class="import-button-label">
-                                <span class="text10"><span>Import</span></span>
-                                <div class="import-icon">
-                                    <img alt="ImportIconVector23493" src="../assets/importiconvector23493-f5bj.svg"
-                                        class="import-icon-vector2" />
-                                    <img alt="ImportIconVector13493" src="../assets/importiconvector13493-82g.svg"
-                                        class="import-icon-vector1" />
-                                </div>
+                        <div id="import-tab" class="import-tab" onclick="import_file(event)">
+                            <span class="import-text"><span>Import</span></span>
+                            <img src="../assets/Import-Icon-Vektor.svg" class="import-icon-vector" />
+                        </div>
+                        <!-- The Modal -->
+                        <div id="import-modal" class="modal">
+                            <div class="import-modal-header">
+                                <span class="import-modal-title">Import CSV</span>
+                                <span onclick="close_import(event)" class="close-modal">&times;</span>
+
                             </div>
+                            <div class="import-modal-dropzone" id="drop_zone" ondrop="dropHandler(event);"
+                                ondragover="dragOverHandler(event);" onclick="select_file(event);">
+                                <img class="import-modal-icon" src="" />
+                                <span id="import-placeholder" class="import-modal-text">Datei hier hinziehen oder
+                                    klicken</span>
+                                <span id="import-tooltip" class="import-modal-tooltip">Unterstütze Formate: .csv</span>
+                                <input class="file-input" id="file" type='file' accept='.csv'
+                                    onchange="open_file(event)">
+                            </div>
+                            <div class="import-modal-upload" id="import-modal-upload">
+                                <span class="import-modal-comit">Datei hochladen</span>
+                            </div>
+
                         </div>
                         <div class="frequency-tab">
                             <div class="frequency-label">
                                 <span class="text12"><span>Frequenz</span></span>
-                                <img alt="FrequencyHelp3564" src="../assets/frequencyhelp3564-taee.svg"
-                                    class="frequency-help" />
+                                <img src="../assets/Tooltip-Icon.svg" class="frequency-help" />
                             </div>
                             <div class="frequency-slider">
-                                <input type="range" id="my-slider" min="0" max="100" value="50" oninput="change_slider()">
-                                <input type="number" id="slider-value" value="50" min="0" max="100"  onClick="this.select();" onchange="change_slider('text')">
+                                <input type="range" id="my-slider" min="0" max="100" value="50"
+                                    oninput="change_slider()">
+                                <input type="number" id="slider-value" value="50" min="0" max="100"
+                                    onClick="this.select();" onchange="change_slider('text')">
                             </div>
                         </div>
                     </div>
                     <div onclick="start_algorithm()" class="start-tab">
-                        <img alt="BUTTONStartButton3494" src="../assets/BUTTONStartButton3494-8kgb.png"
-                            class="b-u-t-t-o-n-start-button" />
-                        <span class="text14"><span>Start</span></span>
+                        <span class="start-button-text"><span>Start</span></span>
                     </div>
                     <div class="output-tab">
                         <div class="output-tab-numbers">
                             <div class="temperature-tab">
                                 <div class="temperature-label">
                                     <span class="text16"><span>Temperatur</span></span>
-                                    <img alt="TemperatureHelp3564" src="../assets/temperaturehelp3564-auyd.svg"
-                                        class="temperature-help" />
+                                    <img src="../assets/Tooltip-Icon.svg" class="temperature-help" />
                                 </div>
-                                <span class="text18"><span>5000</span></span>
+                                <span class="temperature-text"><span id="temperature-text">5000</span></span>
                             </div>
                             <div class="length-tab">
                                 <div class="length-label">
                                     <span class="text20"><span>Länge</span></span>
-                                    <img alt="LengthHelp3564" src="../assets/lengthhelp3564-ahai.svg"
-                                        class="length-help" />
+                                    <img src="../assets/Tooltip-Icon.svg" class="length-help" />
                                 </div>
-                                <span class="text22"><span>2560 km</span></span>
+                                <span class="length-text"><span id="length-text">2560 km</span></span>
                             </div>
                         </div>
                         <div class="chart-tab">
@@ -100,7 +108,7 @@
                                 <span class="text24">
                                     <span>Temperatur Verlauf</span>
                                 </span>
-                                <img alt="ChartHelp3564" src="../assets/charthelp3564-hrxb.svg" class="chart-help" />
+                                <img src="../assets/Tooltip-Icon.svg" class="chart-help" />
                             </div>
                             <div class="o-u-t-chart">
                                 <img src="https://play.teleporthq.io/static/svg/default-img.svg" class="xaxis" />
@@ -118,7 +126,10 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-    <script src="" async defer></script>
-</body>
+    <script type="module" src="../data_models/Parameters.js"></script>
+    <script type="module" src="../data_models/Route.js"></script>
+    <script type="module" src="../data_models/Point.js"></script>
+    <script type="module" src="../gui/gui.js" defer></script>
+    </body>
 
 </html>
