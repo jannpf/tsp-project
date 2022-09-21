@@ -225,11 +225,7 @@ window.dropHandler = function dropHandler(ev) {
     const file = ev.dataTransfer.files[0];
     if (file.type == "text/csv") {
 
-        //readfile(file);
-
-        window.document.getElementById("import-modal-upload").style.display = "flex";
-        window.document.getElementById("import-placeholder").style.display = "none";
-        window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
+        readfile(file);
 
     } else {
         window.document.getElementById("import-tooltip").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
@@ -259,16 +255,69 @@ window.open_file = function open_file(ev) {
     const file = ev.target.files[0];
     if (file.type == "text/csv") {
 
-        //readfile(file);
-
-        window.document.getElementById("import-modal-upload").style.display = "flex";
-        window.document.getElementById("import-placeholder").style.display = "none";
-        window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
+        readfile(file);
     } else {
         window.document.getElementById("import-tooltip").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
         throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
     }
     console.log("log: " + file.name);
+}
+
+
+function readfile(file) {
+
+    //update GUI to represent uploaded file
+
+
+    //reset parameter points
+
+    parameters.points.forEach(e => {
+        parameters.removePoint(e)
+    });
+    console.log(parameters.points);
+
+
+    let reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = function (e) {
+        try {
+            parameters.importPoints(e.target.result);
+
+            window.document.getElementById("import-modal-upload").style.display = "flex";
+            window.document.getElementById("import-placeholder").textContent = "Super!";
+            window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
+
+
+        } catch (error) {
+            window.document.getElementById("import-placeholder").style.display = "flex";
+            window.document.getElementById("import-placeholder").textContent = "Bitte nochmals versuchen!";
+            window.document.getElementById("import-tooltip").textContent = error;
+        }
+
+        console.log(parameters.points);
+    }
+
+}
+
+window.import_to_route = function import_to_route(event) {
+
+    if (parameters.distanceMatrix.size === 0) {
+        var route = new Route(parameters.points, parameters.determineDistanceMatrix());
+    } else {
+        var route = new Route(parameters.points, parameters.distanceMatrix)
+    }
+
+    //close modal and reset it
+    import_modal.style.display = "none";
+
+    window.document.getElementById("import-modal-upload").style.display = "none";
+    window.document.getElementById("import-placeholder").style.display = "flex";
+    window.document.getElementById("import-placeholder").textContent = "Datei hier hinziehen oder klicken.";
+    window.document.getElementById("import-tooltip").textContent = "Unterstütze Formate: .csv";
+
+
+
+    draw_route(route);
 
 }
 

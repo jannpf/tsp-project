@@ -60,12 +60,12 @@
                                 ondragover="dragOverHandler(event);" onclick="select_file(event);">
                                 <img class="import-modal-icon" src="" />
                                 <span id="import-placeholder" class="import-modal-text">Datei hier hinziehen oder
-                                    klicken</span>
+                                    klicken.</span>
                                 <span id="import-tooltip" class="import-modal-tooltip">Unterstütze Formate: .csv</span>
                                 <input class="file-input" id="file" type='file' accept='.csv'
                                     onchange="open_file(event)">
                             </div>
-                            <div class="import-modal-upload" id="import-modal-upload">
+                            <div class="import-modal-upload" id="import-modal-upload" onclick="import_to_route(event)">
                                 <span class="import-modal-comit">Datei hochladen</span>
                             </div>
 
