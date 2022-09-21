@@ -77,4 +77,11 @@ export default class Route {
 
         return result.replace(/\\"/g, '"');
     }
+
+    duplicate() {
+        var p = [...this.#points];
+        var dm = structuredClone(this.#distanceMatrix);
+
+        return new Route(p, dm);
+    }
 }
