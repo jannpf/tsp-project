@@ -1,6 +1,7 @@
 import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
+import {optimize} from "../algorithm/simAnnealing.js";
 
 /**
  * Initiates JS-controlled Elements on window-load
@@ -113,7 +114,7 @@ function draw_parameters_points(param) {
  * Draws a Route w/ Connections and Points onto the main Canvas
  * @param {Route} r 
  */
-function draw_route(r) {
+export function draw_route(r) {
 
     if (!typeof (r) == Route) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
@@ -204,6 +205,8 @@ window.start_algorithm = function start_algorithm() {
 
     var route = new Route(parameters.points, parameters.determineDistanceMatrix());
     draw_route(route);
+
+    optimize(route, parameters.points);
 }
 
 window.import_file = function import_file(evt) {
