@@ -410,7 +410,7 @@ body {
 
 }
 
-.file-input{
+.file-input {
   display: none;
 
 }
@@ -621,8 +621,11 @@ input[type="number"]:focus {
   outline: 0;
 
 }
+.button-tab{
+  margin: 3.5vh;
+}
 
-.start-tab {
+.one-item-tab {
   display: flex;
   flex: 1, 0;
   flex-direction: column;
@@ -634,9 +637,8 @@ input[type="number"]:focus {
   cursor: pointer;
   background-color: #EE6C4D;
   border-color: transparent;
-  width: 20vw;
+  width: 22vw;
   height: 10vh;
-  margin: 3.5vh;
 }
 
 .start-button-text {
@@ -647,8 +649,54 @@ input[type="number"]:focus {
   font-size: 40px;
   line-height: 60px;
   text-align: center;
+  user-select: none;
 
 }
+
+.two-item-tab {
+  display: none;
+  flex: 1, 0;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  gap: 2vw;
+}
+
+.black-button, .red-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  border-color: transparent;
+  border-radius: 23px;
+  cursor: pointer;
+  border-color: transparent;
+  width: 10vw;
+  height: 10vh;
+  margin: 0;
+  user-select: none;
+}
+
+.black-button {
+  background-color: #263238;
+}
+.red-button {
+  background-color: #EE6C4D;
+}
+
+
+
+  
+
+
 
 .output-tab {
   flex: 1, 0;

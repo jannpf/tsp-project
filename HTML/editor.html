@@ -83,9 +83,49 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="start_algorithm()" class="start-tab">
-                        <span class="start-button-text"><span>Start</span></span>
+
+
+                    <div class="button-tab">
+                        <div onclick="start_algorithm()" class="one-item-tab" id="start-start">
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+                        <div class="two-item-tab" id="stop-pause">
+                            <span onclick="stop_algorithm()" class="red-button"><span>Stop</span></span>
+                            <span onclick="pause_algorithm()" class="red-button"><span>Pause</span></span>
+                        </div>
+                        <div class="two-item-tab" id="stop-resume">
+                            <span onclick="stop_algorithm()" class="red-button"><span>Stop</span></span>
+                            <span onclick="resume_algorithm()" class="red-button"><span>Weiter</span></span>
+                        </div>
+                        <div class="two-item-tab" id="export-start">
+                            <span onclick="export_solution()" class="black-button"><span>Export</span></span>
+                            <span onclick="start_algorithm()" class="red-button"><span>Start</span></span>
+                        </div>
+
                     </div>
+
+                    <!--<div class="button-tab">
+                        <div onclick="start_algorithm()" class="start-tab">
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+                        <div class="pause-tab">
+                            <span class="stop-button-text"><span>Stop</span></span>
+                            <span class="pause-button-text"><span>Pause</span></span>
+                        </div>
+                        <div class="resume-tab">
+                            <span class="stop-button-text"><span>Stop</span></span>
+                            <span class="resume-button-text"><span>Weiter</span></span>
+                        </div>
+                        <div class="finished-tab">
+                            <span class="export-button-text"><span>Export</span></span>
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+
+                    </div>-->
+
+
+
+
                     <div class="output-tab">
                         <div class="output-tab-numbers">
                             <div class="temperature-tab">

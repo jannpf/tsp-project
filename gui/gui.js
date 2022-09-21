@@ -195,14 +195,6 @@ window.click_canvas = function click_canvas(evt) {
     draw_parameters_points(parameters);
 }
 
-/**
- * Starts Algorithm
- */
-window.start_algorithm = function start_algorithm() {
-
-    var route = new Route(parameters.points, parameters.determineDistanceMatrix());
-    draw_route(route);
-}
 
 window.import_file = function import_file(evt) {
 
@@ -301,5 +293,40 @@ window.import_to_route = function import_to_route(event) {
     window.document.getElementById("import-tooltip").textContent = "Unterstütze Formate: .csv";
 
     draw_route(route);
+
+}
+
+
+/**
+ * Starts Algorithm
+ */
+ window.start_algorithm = function start_algorithm() {
+
+    var route = new Route(parameters.points, parameters.determineDistanceMatrix());
+
+    draw_route(route);
+
+    window.document.getElementById("start-start").style.display = "none";
+    window.document.getElementById("stop-pause").style.display = "flex";
+}
+
+
+window.pause_algorithm = function pause_algorithm() {
+
+    window.document.getElementById("stop-pause").style.display = "none";
+    window.document.getElementById("stop-resume").style.display = "flex";
+
+}
+
+window.resume_algorithm = function resume_algorithm() {
+    window.document.getElementById("stop-pause").style.display = "flex";
+    window.document.getElementById("stop-resume").style.display = "none";
+}
+
+window.stop_algorithm = function stop_algorithm() {
+    window.document.getElementById("stop-pause").style.display = "none";
+    window.document.getElementById("stop-resume").style.display = "none";
+    window.document.getElementById("start-start").style.display = "flex";
+
 
 }
