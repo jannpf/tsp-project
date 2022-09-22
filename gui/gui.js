@@ -58,6 +58,8 @@ window.change_slider = function change_slider(fixed) {
     } else {
         sliderValue.value = mySlider.value;
     }
+
+    parameters.frequency = sliderValue.value;
 }
 
 /**
@@ -146,6 +148,12 @@ function draw_route(r) {
     r.points.forEach(p => {
         draw_point(p);
     });
+
+    //ouput lenght and temperature to gui
+    var length = Math.round((r.getLength()/1000 + Number.EPSILON) * 100) / 100
+
+    window.document.getElementById("length-text").innerText = length;
+    window.document.getElementById("temperature-text").innerText = "0";
 }
 
 /**
@@ -167,12 +175,14 @@ window.click_canvas = function click_canvas(evt) {
     }
 
     parameters.points.forEach(point => {
-        if (get_distance_two_points(point, temp) < 40) {
+        //if (get_distance_two_points(point, temp) < 40) {
+
+        if (temp.getEuclideanDistance(point) < 20 ){
 
             var index_delete = parameters.points.findIndex(p => {
                 return p.id === point.id
             })
-            console.log(index_delete);
+
 
             parameters.removePoint(index_delete);
             delete_counter++;
@@ -184,27 +194,7 @@ window.click_canvas = function click_canvas(evt) {
     }
     draw_parameters_points(parameters);
 }
-/**
- * Calculates the distance between two Points
- * @param {Point} a 
- * @param {Point} b 
- * @returns {Number} Distance in Pixel
- */
-function get_distance_two_points(a, b) {
-    if (!typeof (a) == !typeof (b) == Point)
-        throw new Error(`Invalid Argument: Expected type 'Point' but got '${typeof (p)}'`);
 
-    return Math.hypot(a.x - b.x, a.y - b.y);
-}
-
-/**
- * Starts Algorithm
- */
-window.start_algorithm = function start_algorithm() {
-
-    var route = new Route(parameters.points, parameters.determineDistanceMatrix());
-    draw_route(route);
-}
 
 window.import_file = function import_file(evt) {
 
@@ -217,7 +207,6 @@ window.close_import = function close_import(evt) {
 }
 
 window.dropHandler = function dropHandler(ev) {
-    console.log('File(s) dropped');
 
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
@@ -225,24 +214,17 @@ window.dropHandler = function dropHandler(ev) {
     const file = ev.dataTransfer.files[0];
     if (file.type == "text/csv") {
 
-        //readfile(file);
-
-        window.document.getElementById("import-modal-upload").style.display = "flex";
-        window.document.getElementById("import-placeholder").style.display = "none";
-        window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
+        readfile(file);
 
     } else {
         window.document.getElementById("import-tooltip").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
         throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
     }
 
-    console.log("log: " + file.name);
 
 }
 
 window.dragOverHandler = function dragOverHandler(ev) {
-    console.log('File(s) in drop zone');
-
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
 }
@@ -254,34 +236,97 @@ window.select_file = function select_file(ev) {
 }
 window.open_file = function open_file(ev) {
 
-    console.log(ev.target.files[0])
-
     const file = ev.target.files[0];
     if (file.type == "text/csv") {
 
-        //readfile(file);
-
-        window.document.getElementById("import-modal-upload").style.display = "flex";
-        window.document.getElementById("import-placeholder").style.display = "none";
-        window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
+        readfile(file);
     } else {
         window.document.getElementById("import-tooltip").textContent = "Die Datei scheint keine .csv zu sein. Versuchen Sie es erneut!";
         throw new Error(`Invalid File: Expected File of Type '.csv' but got '${file.type}'`);
     }
-    console.log("log: " + file.name);
+}
+
+
+function readfile(file) {
+
+    //reset parameter points
+    parameters.points.forEach(e => {
+        parameters.removePoint(e)
+    });
+
+    let reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = function (e) {
+        try {
+            parameters.importPoints(e.target.result);
+
+            window.document.getElementById("import-modal-upload").style.display = "flex";
+            window.document.getElementById("import-placeholder").textContent = "Super!";
+            window.document.getElementById("import-tooltip").textContent = `Datei: '${file.name}'`;
+
+
+        } catch (error) {
+            window.document.getElementById("import-placeholder").style.display = "flex";
+            window.document.getElementById("import-placeholder").textContent = "Bitte nochmals versuchen!";
+            window.document.getElementById("import-tooltip").textContent = error;
+        }
+
+        console.log(parameters.points);
+    }
+
+}
+
+window.import_to_route = function import_to_route(event) {
+
+    if (parameters.distanceMatrix.size === 0) {
+        var route = new Route(parameters.points, parameters.determineDistanceMatrix());
+    } else {
+        var route = new Route(parameters.points, parameters.distanceMatrix)
+    }
+
+    //close modal and reset it
+    import_modal.style.display = "none";
+
+    window.document.getElementById("import-modal-upload").style.display = "none";
+    window.document.getElementById("import-placeholder").style.display = "flex";
+    window.document.getElementById("import-placeholder").textContent = "Datei hier hinziehen oder klicken.";
+    window.document.getElementById("import-tooltip").textContent = "Unterstütze Formate: .csv";
+
+    draw_route(route);
 
 }
 
 
 /**
- * Updates the Length and Temperature displayed
- * @param {Number} length 
- * @param {Number} temperature 
+ * Starts Algorithm
  */
-function update_info(length, temperature) {
-    window.document.getElementById("length-text").innerText = length;
-    window.document.getElementById("temperature-text").innerText = temperature;
+ window.start_algorithm = function start_algorithm() {
 
-    //TODO
-    //Add Temperature Graph via. 2nd Canvas
+    var route = new Route(parameters.points, parameters.determineDistanceMatrix());
+
+    draw_route(route);
+
+    window.document.getElementById("start-start").style.display = "none";
+    window.document.getElementById("stop-pause").style.display = "flex";
+}
+
+
+window.pause_algorithm = function pause_algorithm() {
+
+    window.document.getElementById("stop-pause").style.display = "none";
+    window.document.getElementById("stop-resume").style.display = "flex";
+
+}
+
+window.resume_algorithm = function resume_algorithm() {
+    window.document.getElementById("stop-pause").style.display = "flex";
+    window.document.getElementById("stop-resume").style.display = "none";
+}
+
+window.stop_algorithm = function stop_algorithm() {
+    window.document.getElementById("stop-pause").style.display = "none";
+    window.document.getElementById("stop-resume").style.display = "none";
+    window.document.getElementById("start-start").style.display = "flex";
+
+
 }

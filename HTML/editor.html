@@ -60,12 +60,12 @@
                                 ondragover="dragOverHandler(event);" onclick="select_file(event);">
                                 <img class="import-modal-icon" src="" />
                                 <span id="import-placeholder" class="import-modal-text">Datei hier hinziehen oder
-                                    klicken</span>
+                                    klicken.</span>
                                 <span id="import-tooltip" class="import-modal-tooltip">Unterstütze Formate: .csv</span>
                                 <input class="file-input" id="file" type='file' accept='.csv'
                                     onchange="open_file(event)">
                             </div>
-                            <div class="import-modal-upload" id="import-modal-upload">
+                            <div class="import-modal-upload" id="import-modal-upload" onclick="import_to_route(event)">
                                 <span class="import-modal-comit">Datei hochladen</span>
                             </div>
 
@@ -83,9 +83,49 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="start_algorithm()" class="start-tab">
-                        <span class="start-button-text"><span>Start</span></span>
+
+
+                    <div class="button-tab">
+                        <div onclick="start_algorithm()" class="one-item-tab" id="start-start">
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+                        <div class="two-item-tab" id="stop-pause">
+                            <span onclick="stop_algorithm()" class="red-button"><span>Stop</span></span>
+                            <span onclick="pause_algorithm()" class="red-button"><span>Pause</span></span>
+                        </div>
+                        <div class="two-item-tab" id="stop-resume">
+                            <span onclick="stop_algorithm()" class="red-button"><span>Stop</span></span>
+                            <span onclick="resume_algorithm()" class="red-button"><span>Weiter</span></span>
+                        </div>
+                        <div class="two-item-tab" id="export-start">
+                            <span onclick="export_solution()" class="black-button"><span>Export</span></span>
+                            <span onclick="start_algorithm()" class="red-button"><span>Start</span></span>
+                        </div>
+
                     </div>
+
+                    <!--<div class="button-tab">
+                        <div onclick="start_algorithm()" class="start-tab">
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+                        <div class="pause-tab">
+                            <span class="stop-button-text"><span>Stop</span></span>
+                            <span class="pause-button-text"><span>Pause</span></span>
+                        </div>
+                        <div class="resume-tab">
+                            <span class="stop-button-text"><span>Stop</span></span>
+                            <span class="resume-button-text"><span>Weiter</span></span>
+                        </div>
+                        <div class="finished-tab">
+                            <span class="export-button-text"><span>Export</span></span>
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+
+                    </div>-->
+
+
+
+
                     <div class="output-tab">
                         <div class="output-tab-numbers">
                             <div class="temperature-tab">
