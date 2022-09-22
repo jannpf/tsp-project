@@ -27,7 +27,7 @@ export default class Parameters {
             let distances = new Map();
             for (const end of this.#points) {
                 // add distance to the point
-                distances.set(end.id, start.getDistance(end));
+                distances.set(end.id, start.getEuclideanDistance(end));
             }
             this.#distanceMatrix.set(start.id, distances);
         }
@@ -40,8 +40,8 @@ export default class Parameters {
     }
 
     set frequency(value) {
-        if (value < 0 || value > 10)
-            throw new Error(`Invalid Argument: Frequency must be between 0 and 10`);
+        if (value < 0 || value > 100)
+            throw new Error(`Invalid Argument: Frequency must be between 0 and 100`);
 
         this.#frequency = value;
     }
