@@ -2,11 +2,31 @@ import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
 
+var pin_icon = L.icon({
+    iconUrl: "../assets/Pin.svg",
+    iconSize: [24, 29],
+    iconAnchor: [12, 29],
+    popupAnchor: [0, -29],
+});
+
+
+var leaflet_map = L.map('leaflet-map').setView([47.807027, 9.584041], 12);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+}).addTo(leaflet_map);
+
+var polyline =  L.Layer;
+var markers = new Array;
+
+
+
 /**
  * Initiates JS-controlled Elements on window-load
  */
 window.addEventListener('load', () => {
-    initiate_canvas();
+    //initiate_canvas();
     change_slider();
 
     return window.import_modal = document.getElementById("import-modal");
@@ -16,7 +36,7 @@ window.addEventListener('load', () => {
  * Re-Scales the Canvas on window resize
  */
 window.addEventListener('resize', () => {
-    initiate_canvas();
+    //initiate_canvas();
 })
 
 window.addEventListener('mouseup', function (event) {
@@ -28,22 +48,7 @@ window.addEventListener('mouseup', function (event) {
 
 const parameters = new Parameters();
 
-/**
- * Scales the Canvas to correct size
- * @returns {Context2D} canvas interaction object
- */
-function initiate_canvas() {
 
-    window.canvas = document.getElementById("canvas");
-    if (canvas.getContext) {
-        window.ctx = canvas.getContext("2d");
-
-        canvas.width = window.innerWidth * 0.96;
-        canvas.height = window.innerHeight * 0.6;
-
-        return ctx;
-    }
-}
 /**
  * Syncs Slider Text and Bar two
  * @param {String} fixed fixed="text" sets the text as truth
@@ -62,38 +67,41 @@ window.change_slider = function change_slider(fixed) {
     parameters.frequency = sliderValue.value;
 }
 
-/**
- * gets current location of the mouse on the canvas
- * @param {Canvas} canvas the main canvas
- * @param {onmousedown} evt the mouse position
- * @returns {Object} x, y
- */
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top,
-    };
-}
 
-/**
- * Draws a point p onto the canvas with the p.id as a label
- * @param {Point} p 
- */
-window.draw_point = function draw_point(p) {
-    if (!typeof (p) == Point)
-        throw new Error(`Invalid Argument: Expected type 'Point' but got '${typeof (p)}'`);
-    //marker with number inside
-    ctx.fillStyle = "#263238"
-    let pin = new Path2D('M5 0h20c2.76 0 5 2.22 5 4.97v19.86c0 2.74-2.24 4.96-5 4.96h-5.63L15 36l-4.38-6.2H5c-2.76 0-5-2.23-5-4.97V4.97C0 2.22 2.24 0 5 0Z');
-    ctx.setTransform(1, 0, 0, 1, p.x - 15, p.y - 35);
-    ctx.fill(pin);
+function draw_point(x, y, id) {
 
-    ctx.fillStyle = "#FFFFFF"
-    ctx.font = '20px poppins';
-    ctx.fillText(p.id, 3, 21);
-    ctx.resetTransform();
-}
+
+    var geojsonFeature = {
+
+        "type": "Feature",
+        "id": id,
+        "geometry": {
+            "type": "Point",
+            "coordinates": [x, y]
+        }
+    }
+
+    L.geoJson(geojsonFeature, {
+
+        pointToLayer: function (feature, latlng) {
+
+            var marker = L.marker([x, y], {
+                title: "Resource Location",
+                alt: "Resource Location",
+                riseOnHover: true,
+                draggable: true,
+
+            }).bindPopup(`<input type='button' value='Pin ${id} löschen' class='marker-delete-button'/>`);
+
+            marker.on("popupopen", onPopupOpen);
+            marker.on("dragend", onDragEnd)
+            marker.setIcon(pin_icon);
+            markers.push(marker);
+            return marker;
+        }
+    }).addTo(leaflet_map);
+};
+
 /**
  * Draws all Points stored in a Parameters onto the canvas
  * @param {Parameters} param 
@@ -102,14 +110,71 @@ function draw_parameters_points(param) {
     if (!typeof (param) == Parameters) {
         throw new Error(`Invalid Argument: Expected type 'Paramters' but got '${typeof (param)}'`);
     }
-    ctx.resetTransform();
-    ctx.fillStyle = "#FFFFFF";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    param.points.forEach(p => {
-        draw_point(p);
+    if (markers.length !== 0) {
+        markers.forEach(e => {
+        leaflet_map.removeLayer(e);
     });
+    }
+    
+    param.points.forEach(p => {
+        draw_point(p.x, p.y, p.id);
+    });
+
+
 }
+
+// Script for adding marker on map click
+leaflet_map.on('click', onMapClick);
+
+function onMapClick(e) {
+
+    var last_id = 0;
+
+    if (parameters.points.length !== 0) {
+        last_id = parameters.points[parameters.points.length - 1].id
+    }
+    console.log(leaflet_map._layers)
+
+    parameters.addPoint(new Point(last_id + 1, e.latlng.lat, e.latlng.lng));
+
+    draw_parameters_points(parameters);
+}
+
+function onPopupOpen() {
+
+    var tempMarker = this;
+
+    // To remove marker on click of delete button in the popup of marker
+    document.querySelector(".marker-delete-button").onclick = function () {
+
+        console.log(parameters.points);
+        console.log("tempMarker.feature.id: " + tempMarker.feature.id);
+
+        var index_delete = parameters.points.findIndex(p => {
+            return p.id === tempMarker.feature.id
+        })
+
+        console.log("index_delete: " + index_delete);
+
+        parameters.removePoint(index_delete);
+        leaflet_map.removeLayer(tempMarker);
+
+    };
+
+}
+
+
+function onDragEnd() {
+
+    var tempMarker = this;
+
+    console.log(tempMarker.feature.id);
+
+
+}
+
+//marker.on('click', marker.remove());
 
 /**
  * Draws a Route w/ Connections and Points onto the main Canvas
@@ -121,36 +186,22 @@ function draw_route(r) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
     }
 
-    //clear and reset Canvas
-    ctx.resetTransform();
-    ctx.fillStyle = "#FFFFFF";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = "grey";
-    ctx.lineWidth = 2;
-
-    //connect all points in order
-    for (let i = 0; i < r.points.length - 1; i++) {
-
-        ctx.beginPath();
-        ctx.moveTo(r.points[i].x, r.points[i].y);
-        ctx.lineTo(r.points[i + 1].x, r.points[i + 1].y);
-        ctx.stroke();
-    }
-    //connect last point to first
-    ctx.beginPath();
-    ctx.moveTo(r.points[r.points.length - 1].x, r.points[r.points.length - 1].y);
-    ctx.lineTo(r.points[0].x, r.points[0].y);
-    ctx.stroke();
+    if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
 
 
-    //draw Pins for the Points with ID
-    r.points.forEach(p => {
-        draw_point(p);
+    var result = Array();
+
+    r.points.forEach(e => {
+        result.push([e.x, e.y]);
     });
 
+    result.push([r.points[0].x, r.points[0].y])
+
+    polyline = L.polyline(result, { color: "#676767" }).addTo(leaflet_map);
+
+
     //ouput lenght and temperature to gui
-    var length = Math.round((r.getLength()/1000 + Number.EPSILON) * 100) / 100
+    var length = Math.round((r.getLength() + Number.EPSILON) * 100) / 100
 
     window.document.getElementById("length-text").innerText = length;
     window.document.getElementById("temperature-text").innerText = "0";
@@ -163,37 +214,7 @@ function draw_route(r) {
  * @param {onmousedown} evt the mouse lovation
  */
 
-window.click_canvas = function click_canvas(evt) {
 
-    var loc = getMousePos(canvas, evt);
-    var temp = new Point(parameters.points.length, loc.x, loc.y);
-    var delete_counter = 0;
-    var last_id = 0;
-
-    if (parameters.points.length !== 0) {
-        last_id = parameters.points[parameters.points.length - 1].id
-    }
-
-    parameters.points.forEach(point => {
-        //if (get_distance_two_points(point, temp) < 40) {
-
-        if (temp.getEuclideanDistance(point) < 20 ){
-
-            var index_delete = parameters.points.findIndex(p => {
-                return p.id === point.id
-            })
-
-
-            parameters.removePoint(index_delete);
-            delete_counter++;
-        }
-    });
-
-    if (delete_counter == 0) {
-        parameters.addPoint(new Point(last_id + 1, temp.x, temp.y));
-    }
-    draw_parameters_points(parameters);
-}
 
 
 window.import_file = function import_file(evt) {
@@ -300,7 +321,7 @@ window.import_to_route = function import_to_route(event) {
 /**
  * Starts Algorithm
  */
- window.start_algorithm = function start_algorithm() {
+window.start_algorithm = function start_algorithm() {
 
     var route = new Route(parameters.points, parameters.determineDistanceMatrix());
 
