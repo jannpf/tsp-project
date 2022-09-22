@@ -1,6 +1,11 @@
 import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
+import {optimize} from "../algorithm/simAnnealing.js";
+import { start } from "../processControl/controlElements.js";
+import { pause } from "../processControl/controlElements.js";
+import { resume } from "../processControl/controlElements.js";
+import { stop } from "../processControl/controlElements.js";
 
 /**
  * Initiates JS-controlled Elements on window-load
@@ -115,7 +120,7 @@ function draw_parameters_points(param) {
  * Draws a Route w/ Connections and Points onto the main Canvas
  * @param {Route} r 
  */
-function draw_route(r) {
+export function draw_route(r) {
 
     if (!typeof (r) == Route) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
@@ -194,7 +199,6 @@ window.click_canvas = function click_canvas(evt) {
     }
     draw_parameters_points(parameters);
 }
-
 
 window.import_file = function import_file(evt) {
 
@@ -306,6 +310,8 @@ window.import_to_route = function import_to_route(event) {
 
     draw_route(route);
 
+    start(route, parameters.points);
+
     window.document.getElementById("start-start").style.display = "none";
     window.document.getElementById("stop-pause").style.display = "flex";
 }
@@ -313,17 +319,25 @@ window.import_to_route = function import_to_route(event) {
 
 window.pause_algorithm = function pause_algorithm() {
 
+    pause();
+
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "flex";
 
 }
 
 window.resume_algorithm = function resume_algorithm() {
+
+    resume();
+
     window.document.getElementById("stop-pause").style.display = "flex";
     window.document.getElementById("stop-resume").style.display = "none";
 }
 
 window.stop_algorithm = function stop_algorithm() {
+
+    stop();
+
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("start-start").style.display = "flex";

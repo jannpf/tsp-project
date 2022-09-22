@@ -1,0 +1,17 @@
+Benötigte Methoden:
+
+        Klasse: Route
+        
+            Methode: (get) size()
+            Erklärung: Anzahl der in der Route zurückgeben
+            Return-Datentyp: natürliche Zahl 
+
+            Methode: (get) length()
+            Erklärung: Länge der Route
+            Return-Datentyp: (positive) rationale Zahl
+
+            Methode: (get) swapTwoPoints(Index 1,  Index 2)
+            Parameter: natürliche Zahlen
+            Erklärung: Wechsel der Punkte mit den mitgegebenen Indizes in der Route
+            Return-Datentyp: Route
+            Alternativ: eigenständige Methode zur Erstellung einer alternativen Route mit zwei getauschten Punkten
