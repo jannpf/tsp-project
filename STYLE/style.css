@@ -15,6 +15,7 @@ body {
   height: 70vh;
   width: 100%;
   z-index: 1;
+  background-color:  rgba(248, 248, 248, 1);
 }
 
 .marker-delete-button {
@@ -438,6 +439,7 @@ body {
   font-weight: 700;
   font-size: 22px;
   line-height: 28px;
+  padding: 0px 10px;
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -446,11 +448,13 @@ body {
 }
 
 .import-modal-tooltip {
+  
   font-family: Poppins;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
+  padding: 0px 10px;
 
   align-items: center;
   text-align: center;
