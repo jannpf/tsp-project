@@ -2,12 +2,7 @@ import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
 
-var pin_icon = L.icon({
-    iconUrl: "../assets/Pin.svg",
-    iconSize: [24, 29],
-    iconAnchor: [12, 29],
-    popupAnchor: [0, -29],
-});
+
 
 
 var leaflet_map = L.map('leaflet-map').setView([47.807027, 9.584041], 12);
@@ -70,6 +65,15 @@ window.change_slider = function change_slider(fixed) {
 
 function draw_point(x, y, id) {
 
+    var pin_icon = L.divIcon({
+        className: "number-icon",
+        iconUrl: "../assets/Pin.svg",
+        iconSize: [24, 29],
+        iconAnchor: [12, 29],
+        popupAnchor: [0, -29],
+        html: id,
+    });
+
 
     var geojsonFeature = {
 
@@ -85,17 +89,16 @@ function draw_point(x, y, id) {
 
         pointToLayer: function (feature, latlng) {
 
-            var marker = L.marker([x, y], {
-                title: "Resource Location",
+            var marker = new L.marker([x, y], {
+                icon: pin_icon,
+                title: id,
                 alt: "Resource Location",
                 riseOnHover: true,
-                draggable: true,
+                draggable: false,
 
             }).bindPopup(`<input type='button' value='Pin ${id} löschen' class='marker-delete-button'/>`);
 
             marker.on("popupopen", onPopupOpen);
-            marker.on("dragend", onDragEnd)
-            marker.setIcon(pin_icon);
             markers.push(marker);
             return marker;
         }
@@ -138,6 +141,8 @@ function onMapClick(e) {
 
     parameters.addPoint(new Point(last_id + 1, e.latlng.lat, e.latlng.lng));
 
+    if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
+
     draw_parameters_points(parameters);
 }
 
@@ -148,14 +153,11 @@ function onPopupOpen() {
     // To remove marker on click of delete button in the popup of marker
     document.querySelector(".marker-delete-button").onclick = function () {
 
-        console.log(parameters.points);
-        console.log("tempMarker.feature.id: " + tempMarker.feature.id);
-
         var index_delete = parameters.points.findIndex(p => {
             return p.id === tempMarker.feature.id
         })
 
-        console.log("index_delete: " + index_delete);
+        if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
 
         parameters.removePoint(index_delete);
         leaflet_map.removeLayer(tempMarker);
@@ -164,15 +166,6 @@ function onPopupOpen() {
 
 }
 
-
-function onDragEnd() {
-
-    var tempMarker = this;
-
-    console.log(tempMarker.feature.id);
-
-
-}
 
 //marker.on('click', marker.remove());
 
@@ -299,12 +292,13 @@ function readfile(file) {
 
 window.import_to_route = function import_to_route(event) {
 
-    if (parameters.distanceMatrix.size === 0) {
-        var route = new Route(parameters.points, parameters.determineDistanceMatrix());
-    } else {
-        var route = new Route(parameters.points, parameters.distanceMatrix)
+    if (markers.length !== 0) {
+        markers.forEach(e => {
+        leaflet_map.removeLayer(e);
+    });
     }
 
+    if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
     //close modal and reset it
     import_modal.style.display = "none";
 
@@ -313,7 +307,7 @@ window.import_to_route = function import_to_route(event) {
     window.document.getElementById("import-placeholder").textContent = "Datei hier hinziehen oder klicken.";
     window.document.getElementById("import-tooltip").textContent = "Unterstütze Formate: .csv";
 
-    draw_route(route);
+    draw_parameters_points(parameters);
 
 }
 
@@ -322,6 +316,13 @@ window.import_to_route = function import_to_route(event) {
  * Starts Algorithm
  */
 window.start_algorithm = function start_algorithm() {
+
+    
+    if (parameters.distanceMatrix.size === 0) {
+        var route = new Route(parameters.points, parameters.determineDistanceMatrix());
+    } else {
+        var route = new Route(parameters.points, parameters.distanceMatrix)
+    }
 
     var route = new Route(parameters.points, parameters.determineDistanceMatrix());
 

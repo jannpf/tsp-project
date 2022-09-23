@@ -11,12 +11,13 @@ body {
   /* Hide horizontal scrollbar */
 }
 
-#leaflet-map{
+#leaflet-map {
   height: 70vh;
   width: 100%;
   z-index: 1;
 }
-.marker-delete-button{
+
+.marker-delete-button {
   color: #ffffff;
   background-color: #263238;
   align-self: center;
@@ -31,6 +32,19 @@ body {
   cursor: pointer;
   border-color: transparent;
 }
+
+.number-icon {
+  background-image: url("../assets/Pin.svg");
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 25px;
+  text-align: center;
+  color: White;
+  z-index: 10000;
+}
+
 
 .map-editorv4 {
   width: 100%;
@@ -53,7 +67,7 @@ body {
   height: 7vh;
   display: flex;
   position: relative;
-  align-self:flex-start;
+  align-self: flex-start;
   box-sizing: border-box;
   align-items: flex-start;
   border-color: transparent;
@@ -642,7 +656,8 @@ input[type="number"]:focus {
   outline: 0;
 
 }
-.button-tab{
+
+.button-tab {
   margin: 3.5vh;
 }
 
@@ -684,7 +699,8 @@ input[type="number"]:focus {
   gap: 2vw;
 }
 
-.black-button, .red-button {
+.black-button,
+.red-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -709,13 +725,14 @@ input[type="number"]:focus {
 .black-button {
   background-color: #263238;
 }
+
 .red-button {
   background-color: #EE6C4D;
 }
 
 
 
-  
+
 
 
 
