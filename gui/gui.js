@@ -7,7 +7,6 @@ import { pause } from "../processControl/controlElements.js";
 import { resume } from "../processControl/controlElements.js";
 import { stop } from "../processControl/controlElements.js";
 
-
 /**
  * 
  * Setup of the Leaflet map and needed gloabl variables
