@@ -1,6 +1,7 @@
 import Route from "../data_models/Route.js";
 import {draw_route} from "../gui/gui.js";
-import { get_status } from "../processControl/controlElements.js";
+import {finish_algorithm} from "../gui/gui.js";
+import {get_status } from "../processControl/controlElements.js";
  
 
 
@@ -13,13 +14,13 @@ import { get_status } from "../processControl/controlElements.js";
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
 
-    export async function optimize(startingRoute, points) {
-        var temperature = 10000;
+    export async function optimize(startingRoute, points, frequency) {
+        var temperature = 100;
         var coolingFactor = 0.995;
         var currentRoute = startingRoute.duplicate();
 
 
-        while(temperature > 1) {
+        while(temperature > 0.1) {
 
             await sleep(1);
 
@@ -52,7 +53,7 @@ import { get_status } from "../processControl/controlElements.js";
                     currentRoute = newRoute;
                     // console.log('Ja, weil kürzer');
                 } else {
-                    var difference = currentRoute.getLength() - newRoute.getLength();
+                    var difference = (currentRoute.getLength() - newRoute.getLength())/currentRoute.getLength()*100;
                     var probabilityFactor = Math.exp(difference / temperature);
                     console.log('Differenz:' + difference);
                     console.log('Temperatur:' + temperature);
@@ -69,12 +70,14 @@ import { get_status } from "../processControl/controlElements.js";
                 temperature = temperature * coolingFactor;
 
 
-                draw_route(currentRoute);
-                await sleep(10);
+                draw_route(currentRoute, temperature);
+                await sleep(frequency);
 
             } else if (get_status() == 'stopped') {
                break;
             }
-
+            
         }
+        if (get_status() !== 'stopped'){finish_algorithm(currentRoute);}
+    
     }

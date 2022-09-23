@@ -24,6 +24,10 @@ export default class Route {
         return this.#points;
     }
 
+    get distanceMatrix() {
+        return this.#distanceMatrix;
+    }
+
     /**
      * Calculate total length of route based on the distance matrix
      */
@@ -34,6 +38,14 @@ export default class Route {
             let p2 = this.#points[i];
             length += this.#distanceMatrix.get(p1.id).get(p2.id);
         }
+
+        // roundtrip
+        if (this.#points.length > 1) {
+            let p1 = this.#points[0];
+            let p2 = this.#points[this.#points.length - 1];
+            length += this.#distanceMatrix.get(p1.id).get(p2.id);
+        }
+
         return length;
     }
 
@@ -70,6 +82,8 @@ export default class Route {
         this.#points.forEach(p => {
             segment += `<trkpt lat="${p.x}" lon="${p.y}"></trkpt>`
         })
+        if (this.#points.length > 1)
+            segment += `<trkpt lat="${this.#points[0].x}" lon="${this.#points[0].y}"></trkpt>`
         segment += '</trkseg>'
         let gpx_end = '</trk></gpx>';
 

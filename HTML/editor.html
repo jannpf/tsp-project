@@ -13,6 +13,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../STYLE/style.css">
     <link rel="stylesheet" href="https://use.typekit.net/nvd5kwc.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
+
 </head>
 
 <body">
@@ -40,9 +50,11 @@
                     </div>
                 </div>
                 <img alt="HLineNavbar3493" src="../assets/hlinenavbar3493-i7po.svg" class="h-line-navbar" />
-                <div id="map-frame" class="map-frame">
-                    <canvas id="canvas" onmousedown="click_canvas(event)"></canvas>
-                </div>
+                <div id="leaflet-map"></div>
+
+                <!--<div id="map-frame" class="map-frame">
+                    <canvas id="canvas" onmousedown="click_canvas(event)"></canvas> 
+                </div>-->
                 <div class="menu-bar-bottom">
                     <div class="input-tab">
                         <div id="import-tab" class="import-tab" onclick="import_file(event)">
@@ -83,8 +95,23 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="start_algorithm()" class="start-tab">
-                        <span class="start-button-text"><span>Start</span></span>
+                    <div class="button-tab">
+                        <div onclick="start_algorithm()" class="one-item-tab" id="start-start">
+                            <span class="start-button-text"><span>Start</span></span>
+                        </div>
+                        <div class="two-item-tab" id="stop-pause">
+                            <span onclick="stop_algorithm()" class="red-button"><span>Stop</span></span>
+                            <span onclick="pause_algorithm()" class="red-button"><span>Pause</span></span>
+                        </div>
+                        <div class="two-item-tab" id="stop-resume">
+                            <span onclick="stop_algorithm()" class="red-button"><span>Stop</span></span>
+                            <span onclick="resume_algorithm()" class="red-button"><span>Weiter</span></span>
+                        </div>
+                        <div class="two-item-tab" id="export-start">
+                            <span onclick="export_solution()" class="black-button"><span>Export</span></span>
+                            <span onclick="start_algorithm()" class="red-button"><span>Start</span></span>
+                        </div>
+
                     </div>
                     <div class="output-tab">
                         <div class="output-tab-numbers">
@@ -93,14 +120,14 @@
                                     <span class="text16"><span>Temperatur</span></span>
                                     <img src="../assets/Tooltip-Icon.svg" class="temperature-help" />
                                 </div>
-                                <span class="temperature-text"><span id="temperature-text">5000</span></span>
+                                <span class="temperature-text"><span id="temperature-text">0</span></span>
                             </div>
                             <div class="length-tab">
                                 <div class="length-label">
                                     <span class="text20"><span>Länge</span></span>
                                     <img src="../assets/Tooltip-Icon.svg" class="length-help" />
                                 </div>
-                                <span class="length-text"><span id="length-text">2560 km</span></span>
+                                <span class="length-text"><span id="length-text">0</span></span>
                             </div>
                         </div>
                         <div class="chart-tab">
