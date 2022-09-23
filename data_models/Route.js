@@ -41,8 +41,8 @@ export default class Route {
 
         // roundtrip
         if (this.#points.length > 1) {
-            p1 = this.#points[0];
-            p2 = this.#points[this.#points.length - 1];
+            let p1 = this.#points[0];
+            let p2 = this.#points[this.#points.length - 1];
             length += this.#distanceMatrix.get(p1.id).get(p2.id);
         }
 
