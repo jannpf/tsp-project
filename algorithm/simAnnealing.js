@@ -14,7 +14,7 @@ import {get_status } from "../processControl/controlElements.js";
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
 
-    export async function optimize(startingRoute, points) {
+    export async function optimize(startingRoute, points, frequency) {
         var temperature = 100;
         var coolingFactor = 0.995;
         var currentRoute = startingRoute.duplicate();
@@ -71,11 +71,13 @@ import {get_status } from "../processControl/controlElements.js";
 
 
                 draw_route(currentRoute);
-                await sleep(10);
+                await sleep(frequency);
 
             } else if (get_status() == 'stopped') {
                break;
             }
-            finish_algorithm();
+            
         }
+        if (get_status() !== 'stopped'){finish_algorithm();}
+    
     }

@@ -65,6 +65,7 @@ window.change_slider = function change_slider(fixed) {
     }
 
     parameters.frequency = sliderValue.value;
+    console.log(parameters.frequency);
 }
 
 
@@ -333,10 +334,11 @@ window.start_algorithm = function start_algorithm() {
 
     draw_route(route);
 
-    start(route, parameters.points);
+    start(route, parameters.points, parameters.frequency);
 
     window.document.getElementById("start-start").style.display = "none";
     window.document.getElementById("stop-pause").style.display = "flex";
+    window.document.getElementById("export-start").style.display = "none";
 }
 
 
@@ -346,6 +348,7 @@ window.pause_algorithm = function pause_algorithm() {
 
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "flex";
+    window.document.getElementById("export-start").style.display = "none";
 
 }
 
@@ -355,6 +358,7 @@ window.resume_algorithm = function resume_algorithm() {
 
     window.document.getElementById("stop-pause").style.display = "flex";
     window.document.getElementById("stop-resume").style.display = "none";
+    window.document.getElementById("export-start").style.display = "none";
 }
 
 window.stop_algorithm = function stop_algorithm() {
@@ -367,6 +371,7 @@ window.stop_algorithm = function stop_algorithm() {
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("start-start").style.display = "flex";
+    window.document.getElementById("export-start").style.display = "none";
 
 
 }
