@@ -328,16 +328,17 @@ window.import_to_route = function import_to_route(event) {
  */
 window.start_algorithm = function start_algorithm() {
 
-
-    if (parameters.distanceMatrix.size === 0) {
+    if (parameters.distanceMatrix.size !== parameters.points.length) {
         var route = new Route(parameters.points, parameters.determineDistanceMatrix());
     } else {
         var route = new Route(parameters.points, parameters.distanceMatrix)
     }
 
-    draw_route(route);
 
     start(route, parameters.points, parameters.frequency);
+    draw_route(route);
+
+
 
     window.document.getElementById("start-start").style.display = "none";
     window.document.getElementById("stop-pause").style.display = "flex";
@@ -382,7 +383,7 @@ window.stop_algorithm = function stop_algorithm() {
 
 export function finish_algorithm(r) {
 
-    export_route = new Route(r.points,r.distanceMatrix);
+    export_route = new Route(r.points, r.distanceMatrix);
 
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
@@ -395,7 +396,7 @@ window.export_solution = function export_solution() {
 
 
     var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/json;charset=utf-8,'+ export_route.export_to_gpx());
+    element.setAttribute('href', 'data:text/json;charset=utf-8,' + export_route.export_to_gpx());
     element.setAttribute('download', "export_route.gpx");
 
     element.style.display = 'none';
