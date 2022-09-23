@@ -14,6 +14,8 @@ import { stop } from "../processControl/controlElements.js";
  * 
  */
 
+ 
+
 //layer openstreetmap
 var osm = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -43,7 +45,33 @@ var leaflet_map = L.map('leaflet-map', {
 //layer-control to decide between base-maps
 var layerControl = L.control.layers(baseMaps).addTo(leaflet_map);
 
+var customControl =  L.Control.extend({        
+    options: {
+      position: 'topleft'
+    },
 
+    onAdd: function (leaflet_map) {
+      var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+
+      container.style.backgroundColor = 'white';     
+      container.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+      container.style.backgroundSize = "30px 30px";
+      container.style.width = '30px';
+      container.style.height = '30px';
+
+      container.onclick = function(){
+        clear_map(true,true);
+
+        parameters.points.forEach(e => {
+            parameters.removePoint(e)
+        });
+      }
+
+      return container;
+    }
+  });
+
+  leaflet_map.addControl(new customControl());
 // Script for adding marker on map click
 leaflet_map.on('click', on_map_click);
 
