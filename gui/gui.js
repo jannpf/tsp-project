@@ -13,44 +13,45 @@ import { stop } from "../processControl/controlElements.js";
  * Setup of the Leaflet map and needed gloabl variables
  * 
  */
-        
-        //layer openstreetmap
-        var osm = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap',
-        });
 
-        //layer white background
-        var white = (L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            opacity: 0,
-        }));
+//layer openstreetmap
+var osm = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap',
+});
 
-        //define layergrup of baseMaps
-        var baseMaps = {
-            "Weißer Hintergrund": white,
-            "Weltkarte": osm,
-            
-        };
-        
-        //define map and starting positiob
-        var leaflet_map = L.map('leaflet-map', {
-            center: [47.807027, 9.584041], 
-            zoom: 12, 
-            layers: [white, osm]});
+//layer white background
+var white = (L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    opacity: 0,
+}));
 
-        //layer-control to decide between base-maps
-        var layerControl = L.control.layers(baseMaps).addTo(leaflet_map);
+//define layergrup of baseMaps
+var baseMaps = {
+    "Weißer Hintergrund": white,
+    "Weltkarte": osm,
+
+};
+
+//define map and starting positiob
+var leaflet_map = L.map('leaflet-map', {
+    center: [47.807027, 9.584041],
+    zoom: 12,
+    layers: [white, osm]
+});
+
+//layer-control to decide between base-maps
+var layerControl = L.control.layers(baseMaps).addTo(leaflet_map);
 
 
-        // Script for adding marker on map click
-        leaflet_map.on('click', on_map_click);
+// Script for adding marker on map click
+leaflet_map.on('click', on_map_click);
 
-        //needed gloabl variables
-        var polyline = L.Layer;
-        var markers = new Array;
-        const parameters = new Parameters();
-        var export_route = "";
+//needed gloabl variables
+var polyline = L.Layer;
+var markers = new Array;
+const parameters = new Parameters();
+var export_route = "";
 
 
 /**
@@ -98,7 +99,6 @@ window.clear_map = function clear_map(d_marker, d_route) {
     if (leaflet_map.hasLayer(polyline) && d_route) {
         leaflet_map.removeLayer(polyline)
     };
-
 }
 
 /**
@@ -192,7 +192,7 @@ export function draw_route(r, t) {
     }
 
     //clears map of routes
-    clear_map(false,true);
+    clear_map(false, true);
 
     //converts the point coordinates into a 2-dimensional array for polyline
     var result = Array();
@@ -262,7 +262,6 @@ function on_popup_open() {
         parameters.removePoint(index_delete);
         leaflet_map.removeLayer(tempMarker);
     };
-
 }
 
 /**
@@ -323,7 +322,6 @@ window.dragOverHandler = function dragOverHandler(ev) {
 window.select_file = function select_file(ev) {
 
     window.document.getElementById("file").click();
-
 }
 
 /**
@@ -343,7 +341,6 @@ window.open_file = function open_file(ev) {
         window.document.getElementById("import-placeholder").textContent = "Bitte nochmals versuchen!";
         window.document.getElementById("import-tooltip").textContent = error;
     }
-
 }
 
 /**
@@ -418,7 +415,6 @@ window.import_to_route = function import_to_route(event) {
 
     //draw imported points onto map from parameters
     draw_parameters_points(parameters);
-
 }
 
 
@@ -480,7 +476,7 @@ window.resume_algorithm = function resume_algorithm() {
 window.stop_algorithm = function stop_algorithm() {
 
     //clears map of routes
-    clear_map(false,true);
+    clear_map(false, true);
 
     //sets processControl to stop algorithm
     stop();
