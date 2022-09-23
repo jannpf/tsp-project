@@ -83,7 +83,7 @@ export default class Route {
             segment += `<trkpt lat="${p.x}" lon="${p.y}"></trkpt>`
         })
         if (this.#points.length > 1)
-            segment += segment += `<trkpt lat="${this.#points[0].x}" lon="${this.#points[0].y}"></trkpt>`
+            segment += `<trkpt lat="${this.#points[0].x}" lon="${this.#points[0].y}"></trkpt>`
         segment += '</trkseg>'
         let gpx_end = '</trk></gpx>';
 

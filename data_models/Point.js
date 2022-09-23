@@ -32,10 +32,10 @@ export default class Point {
      * @param {Point} dest 
      */
     getDistance(dest) {
-        let lon1 = this.#y
         let lat1 = this.#x
-        let lon2 = dest.y
+        let lon1 = this.#y
         let lat2 = dest.x
+        let lon2 = dest.y
 
         // radius of the earth in km
         let r = 6371
