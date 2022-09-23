@@ -1,6 +1,11 @@
 import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
+import {optimize} from "../algorithm/simAnnealing.js";
+import { start } from "../processControl/controlElements.js";
+import { pause } from "../processControl/controlElements.js";
+import { resume } from "../processControl/controlElements.js";
+import { stop } from "../processControl/controlElements.js";
 
 
 
@@ -173,7 +178,7 @@ function onPopupOpen() {
  * Draws a Route w/ Connections and Points onto the main Canvas
  * @param {Route} r 
  */
-function draw_route(r) {
+ export function draw_route(r) {
 
     if (!typeof (r) == Route) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
@@ -328,6 +333,8 @@ window.start_algorithm = function start_algorithm() {
 
     draw_route(route);
 
+    start(route, parameters.points);
+
     window.document.getElementById("start-start").style.display = "none";
     window.document.getElementById("stop-pause").style.display = "flex";
 }
@@ -335,20 +342,42 @@ window.start_algorithm = function start_algorithm() {
 
 window.pause_algorithm = function pause_algorithm() {
 
+    pause();
+
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "flex";
 
 }
 
 window.resume_algorithm = function resume_algorithm() {
+
+    resume();
+
     window.document.getElementById("stop-pause").style.display = "flex";
     window.document.getElementById("stop-resume").style.display = "none";
 }
 
 window.stop_algorithm = function stop_algorithm() {
+
+
+    if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
+
+    stop();
+
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("start-start").style.display = "flex";
+
+
+}
+
+
+export function finish_algorithm() {
+
+
+    window.document.getElementById("stop-pause").style.display = "none";
+    window.document.getElementById("stop-resume").style.display = "none";
+    window.document.getElementById("export-start").style.display = "flex";
 
 
 }
