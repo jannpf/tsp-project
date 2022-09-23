@@ -70,7 +70,7 @@ import {get_status } from "../processControl/controlElements.js";
                 temperature = temperature * coolingFactor;
 
 
-                draw_route(currentRoute);
+                draw_route(currentRoute, temperature);
                 await sleep(frequency);
 
             } else if (get_status() == 'stopped') {

@@ -183,7 +183,7 @@ function onPopupOpen() {
  * Draws a Route w/ Connections and Points onto the main Canvas
  * @param {Route} r 
  */
-export function draw_route(r) {
+export function draw_route(r, t) {
 
     if (!typeof (r) == Route) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
@@ -205,9 +205,10 @@ export function draw_route(r) {
 
     //ouput lenght and temperature to gui
     var length = Math.round((r.getLength() + Number.EPSILON) * 100) / 100
+    var temperature = Math.round((t + Number.EPSILON) * 100) / 100
 
     window.document.getElementById("length-text").innerText = length;
-    window.document.getElementById("temperature-text").innerText = "0";
+    window.document.getElementById("temperature-text").innerText = temperature;
 }
 
 /**
