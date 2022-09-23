@@ -423,85 +423,106 @@ window.import_to_route = function import_to_route(event) {
 
 
 /**
- * Starts Algorithm
+ * Starts algorithm
  */
 window.start_algorithm = function start_algorithm() {
 
+
+    //if distanceMatrix already exists (ex. Import), use that, otherwise create new
     if (parameters.distanceMatrix.size !== parameters.points.length) {
         var route = new Route(parameters.points, parameters.determineDistanceMatrix());
     } else {
         var route = new Route(parameters.points, parameters.distanceMatrix)
     }
 
-
+    //initiate algorithm
     start(route, parameters.points, parameters.frequency);
     draw_route(route);
 
 
-
+    //update bottom button section
     window.document.getElementById("start-start").style.display = "none";
     window.document.getElementById("stop-pause").style.display = "flex";
     window.document.getElementById("export-start").style.display = "none";
 }
 
+/**
+ * Pauses algorithm
+ */
 window.pause_algorithm = function pause_algorithm() {
 
+    //sets processControl to pause algorithm
     pause();
 
+    //update bottom button section
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "flex";
     window.document.getElementById("export-start").style.display = "none";
-
 }
 
+/**
+ * Resumes algorithm
+ */
 window.resume_algorithm = function resume_algorithm() {
 
+    //sets processControl to resume algroithm
     resume();
 
+    //update bottom button section
     window.document.getElementById("stop-pause").style.display = "flex";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("export-start").style.display = "none";
 }
 
+/**
+ * Stops algorithm
+ */
 window.stop_algorithm = function stop_algorithm() {
 
+    //clears map of routes
+    clear_map(false,true);
 
-    if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
-
+    //sets processControl to stop algorithm
     stop();
 
+    //update bottom button section
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("start-start").style.display = "flex";
     window.document.getElementById("export-start").style.display = "none";
-
-
 }
 
-
+/**
+ * provides a function for the algorithm to call upon completion.
+ * Takes the final route as an input and shows the export button.
+ * @param {Route} r 
+ */
 export function finish_algorithm(r) {
 
+    //defines the final route to prepare for export
     export_route = new Route(r.points, r.distanceMatrix);
 
+    //update bottom button section
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("export-start").style.display = "flex";
-
-
 }
 
+/**
+ * Exports the final route to a .gpx file
+ */
 window.export_solution = function export_solution() {
 
-
+    //create .gpx file with export_route as content
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/json;charset=utf-8,' + export_route.export_to_gpx());
     element.setAttribute('download', "export_route.gpx");
 
+    //hides the element
     element.style.display = 'none';
     document.body.appendChild(element);
 
+    //simulates a click on the element and then delets it
     element.click();
-
     document.body.removeChild(element);
-
 }
