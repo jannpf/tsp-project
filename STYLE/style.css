@@ -45,6 +45,22 @@ body {
   z-index: 10000;
 }
 
+.popup{
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.popup-text{
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+
+}
 
 .map-editorv4 {
   width: 100%;

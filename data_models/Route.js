@@ -24,6 +24,10 @@ export default class Route {
         return this.#points;
     }
 
+    get distanceMatrix() {
+        return this.#distanceMatrix;
+    }
+
     /**
      * Calculate total length of route based on the distance matrix
      */

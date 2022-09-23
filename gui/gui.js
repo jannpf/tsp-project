@@ -1,7 +1,7 @@
 import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
-import {optimize} from "../algorithm/simAnnealing.js";
+import { optimize } from "../algorithm/simAnnealing.js";
 import { start } from "../processControl/controlElements.js";
 import { pause } from "../processControl/controlElements.js";
 import { resume } from "../processControl/controlElements.js";
@@ -17,7 +17,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
 }).addTo(leaflet_map);
 
-var polyline =  L.Layer;
+var polyline = L.Layer;
 var markers = new Array;
 
 
@@ -47,6 +47,7 @@ window.addEventListener('mouseup', function (event) {
 
 
 const parameters = new Parameters();
+var export_route = ""
 
 
 /**
@@ -102,7 +103,10 @@ function draw_point(x, y, id) {
                 riseOnHover: true,
                 draggable: false,
 
-            }).bindPopup(`<input type='button' value='Pin ${id} löschen' class='marker-delete-button'/>`);
+            }).bindPopup(`<div class="popup">
+            <span class="popup-text">Lat: ${Math.round((x + Number.EPSILON) * 1000) / 1000}</span>
+            <span class="popup-text">Lon: ${Math.round((y + Number.EPSILON) * 1000) / 1000}</span>
+            <input type='button' value='Pin ${id} löschen' class='marker-delete-button'/></div>`);
 
             marker.on("popupopen", onPopupOpen);
             markers.push(marker);
@@ -122,10 +126,10 @@ function draw_parameters_points(param) {
 
     if (markers.length !== 0) {
         markers.forEach(e => {
-        leaflet_map.removeLayer(e);
-    });
+            leaflet_map.removeLayer(e);
+        });
     }
-    
+
     param.points.forEach(p => {
         draw_point(p.x, p.y, p.id);
     });
@@ -179,7 +183,7 @@ function onPopupOpen() {
  * Draws a Route w/ Connections and Points onto the main Canvas
  * @param {Route} r 
  */
- export function draw_route(r) {
+export function draw_route(r) {
 
     if (!typeof (r) == Route) {
         throw new Error(`Invalid Argument: Expected type 'Route' but got '${typeof (r)}'`);
@@ -300,8 +304,8 @@ window.import_to_route = function import_to_route(event) {
 
     if (markers.length !== 0) {
         markers.forEach(e => {
-        leaflet_map.removeLayer(e);
-    });
+            leaflet_map.removeLayer(e);
+        });
     }
 
     if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
@@ -323,14 +327,12 @@ window.import_to_route = function import_to_route(event) {
  */
 window.start_algorithm = function start_algorithm() {
 
-    
+
     if (parameters.distanceMatrix.size === 0) {
         var route = new Route(parameters.points, parameters.determineDistanceMatrix());
     } else {
         var route = new Route(parameters.points, parameters.distanceMatrix)
     }
-
-    var route = new Route(parameters.points, parameters.determineDistanceMatrix());
 
     draw_route(route);
 
@@ -377,12 +379,29 @@ window.stop_algorithm = function stop_algorithm() {
 }
 
 
-export function finish_algorithm() {
+export function finish_algorithm(r) {
 
+    export_route = new Route(r.points,r.distanceMatrix);
 
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "none";
     window.document.getElementById("export-start").style.display = "flex";
 
+
+}
+
+window.export_solution = function export_solution() {
+
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/json;charset=utf-8,'+ export_route.export_to_gpx());
+    element.setAttribute('download', "export_route.gpx");
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 
 }

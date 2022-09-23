@@ -27,7 +27,7 @@ export default class Parameters {
             let distances = new Map();
             for (const end of this.#points) {
                 // add distance to the point
-                distances.set(end.id, start.getEuclideanDistance(end));
+                distances.set(end.id, start.getDistance(end));
             }
             this.#distanceMatrix.set(start.id, distances);
         }

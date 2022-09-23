@@ -78,6 +78,6 @@ import {get_status } from "../processControl/controlElements.js";
             }
             
         }
-        if (get_status() !== 'stopped'){finish_algorithm();}
+        if (get_status() !== 'stopped'){finish_algorithm(currentRoute);}
     
     }
