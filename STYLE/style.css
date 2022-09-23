@@ -681,7 +681,7 @@ input[type="number"]:focus {
   margin: 3.5vh;
 }
 
-.start-tab {
+.one-item-tab {
   display: flex;
   flex: 1, 0;
   flex-direction: column;
