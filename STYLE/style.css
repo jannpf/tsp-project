@@ -757,7 +757,7 @@ input[type="number"]:focus {
 
 
 .output-tab {
-  flex: 1, 0;
+  flex: 0, 0;
   width: 20vw;
   height: 17vh;
   display: flex;
@@ -778,7 +778,7 @@ input[type="number"]:focus {
   position: relative;
   align-self: stretch;
   box-sizing: border-box;
-  align-items: flex-start;
+  align-items:stretch;
   flex-shrink: 0;
   border-color: transparent;
   margin-right: 0;
@@ -787,7 +787,7 @@ input[type="number"]:focus {
 }
 
 .temperature-tab {
-  width: 0%;
+  width: 50%;
   display: flex;
   position: relative;
   flex-grow: 1;
@@ -795,9 +795,8 @@ input[type="number"]:focus {
   align-items: flex-start;
   flex-shrink: 0;
   border-color: transparent;
-  margin-right: 10px;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
+  margin-bottom:0px;
   flex-direction: column;
   justify-content: flex-start;
 }
@@ -810,13 +809,13 @@ input[type="number"]:focus {
   border-color: transparent;
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 .text16 {
   color: var(--dl-color-black-200);
   height: auto;
-  font-size: 16px;
+  font-size: 14px;
   align-self: auto;
   font-style: Medium;
   text-align: left;
@@ -824,8 +823,8 @@ input[type="number"]:focus {
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
-  margin-right: 10px;
-  margin-bottom: 0;
+  margin-right: 5px;
+  margin-bottom:0px;
   text-decoration: none;
 }
 
@@ -841,7 +840,7 @@ input[type="number"]:focus {
 .temperature-text {
   color: var(--dl-color-red-red);
   height: auto;
-  font-size: 28px;
+  font-size: 22px;
   align-self: auto;
   font-style: Medium;
   text-align: left;
@@ -852,10 +851,11 @@ input[type="number"]:focus {
   margin-right: 0;
   margin-bottom: 0;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .length-tab {
-  width: 0%;
+  width: 50%;
   display: flex;
   position: relative;
   flex-grow: 1;
@@ -879,7 +879,7 @@ input[type="number"]:focus {
   border-color: transparent;
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 .text20 {
@@ -893,7 +893,7 @@ input[type="number"]:focus {
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
-  margin-right: 10px;
+  margin-right: 5px;
   margin-bottom: 0;
   text-decoration: none;
 }
@@ -910,7 +910,7 @@ input[type="number"]:focus {
 .length-text {
   color: var(--dl-color-black-200);
   height: auto;
-  font-size: 28px;
+  font-size: 22px;
   align-self: auto;
   font-style: Medium;
   text-align: left;
@@ -921,6 +921,7 @@ input[type="number"]:focus {
   margin-right: 0;
   margin-bottom: 0;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .chart-tab {
