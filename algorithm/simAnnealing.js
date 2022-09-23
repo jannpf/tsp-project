@@ -53,7 +53,7 @@ import {get_status } from "../processControl/controlElements.js";
                     currentRoute = newRoute;
                     // console.log('Ja, weil kürzer');
                 } else {
-                    var difference = currentRoute.getLength() - newRoute.getLength();
+                    var difference = (currentRoute.getLength() - newRoute.getLength())/currentRoute.getLength()*100;
                     var probabilityFactor = Math.exp(difference / temperature);
                     console.log('Differenz:' + difference);
                     console.log('Temperatur:' + temperature);
