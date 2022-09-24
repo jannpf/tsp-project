@@ -106,6 +106,9 @@ window.change_slider = function change_slider(fixed) {
     }
 
     parameters.frequency = sliderValue.value;
+
+    sessionStorage.setItem('frequency', sliderValue.value);
+
     console.log(parameters.frequency);
 }
 
@@ -452,14 +455,10 @@ window.start_algorithm = function start_algorithm() {
 
 
     //if distanceMatrix already exists (ex. Import), use that, otherwise create new
-    if (parameters.distanceMatrix.size !== parameters.points.length) {
-        var route = new Route(parameters.points, parameters.determineDistanceMatrix());
-    } else {
-        var route = new Route(parameters.points, parameters.distanceMatrix)
-    }
+    
 
     //initiate algorithm
-    start(route, parameters.points, parameters.frequency);
+    start(parameters);
     draw_route(route);
 
 

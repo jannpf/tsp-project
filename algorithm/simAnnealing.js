@@ -14,7 +14,14 @@ import {get_status } from "../processControl/controlElements.js";
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
 
-    export async function optimize(startingRoute, points, frequency) {
+    export async function optimize(parameters) {
+
+        if (parameters.distanceMatrix.size !== parameters.points.length) {
+            var startingRoute = new Route(parameters.points, parameters.determineDistanceMatrix());
+        } else {
+            var startingRoute = new Route(parameters.points, parameters.distanceMatrix)
+        }
+
         var temperature = 100;
         var coolingFactor = 0.995;
         var currentRoute = startingRoute.duplicate();
@@ -37,8 +44,8 @@ import {get_status } from "../processControl/controlElements.js";
                 // }
                 
                 while(indexOfPointA == indexOfPointB) {
-                    indexOfPointA = Math.floor(Math.random()*points.length);
-                    indexOfPointB = Math.floor(Math.random()*points.length);
+                    indexOfPointA = Math.floor(Math.random()*parameters.points.length);
+                    indexOfPointB = Math.floor(Math.random()*parameters.points.length);
                     // console.log('A: ' + indexOfPointA);
                     // console.log('B: ' + indexOfPointB);
                 }
@@ -71,7 +78,7 @@ import {get_status } from "../processControl/controlElements.js";
 
 
                 draw_route(currentRoute, temperature);
-                await sleep(frequency);
+                await sleep(100-sessionStorage.getItem('frequency'));
 
             } else if (get_status() == 'stopped') {
                break;
