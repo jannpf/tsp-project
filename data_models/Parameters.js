@@ -3,6 +3,7 @@ import Point from "./Point.js";
 export default class Parameters {
     #points = new Array();
     #distanceMatrix = new Map();
+    #averageDistance = 0;
     #frequency = 0;
     #distanceMatrixImported = false;
 
@@ -31,7 +32,21 @@ export default class Parameters {
             }
             this.#distanceMatrix.set(start.id, distances);
         }
+        this.#determineAverageDistance()
         return this.#distanceMatrix;
+    }
+
+    /**
+     * Calculate the average point to point distance
+     */
+    #determineAverageDistance() {
+        let sum = 0;
+        this.#distanceMatrix.forEach((s) => s.forEach((d) => sum += d))
+        this.#averageDistance = sum / (this.#points.length * (this.#points.length - 1));
+    }
+
+    get averageDistance() {
+        return this.#averageDistance;
     }
 
     //Frequency
@@ -148,5 +163,6 @@ export default class Parameters {
             });
             this.#distanceMatrix.set(lineIndex, distances);
         })
+        this.#determineAverageDistance()
     }
 }
