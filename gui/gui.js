@@ -13,7 +13,7 @@ import { stop } from "../processControl/controlElements.js";
  * 
  */
 
- 
+
 
 //layer openstreetmap
 var osm = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
@@ -44,33 +44,33 @@ var leaflet_map = L.map('leaflet-map', {
 //layer-control to decide between base-maps
 var layerControl = L.control.layers(baseMaps).addTo(leaflet_map);
 
-var customControl =  L.Control.extend({        
+var customControl = L.Control.extend({
     options: {
-      position: 'topleft'
+        position: 'topleft'
     },
 
     onAdd: function (leaflet_map) {
-      var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
 
-      container.style.backgroundColor = 'white';     
-      container.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
-      container.style.backgroundSize = "30px 30px";
-      container.style.width = '30px';
-      container.style.height = '30px';
+        container.style.backgroundColor = 'white';
+        container.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+        container.style.backgroundSize = "30px 30px";
+        container.style.width = '30px';
+        container.style.height = '30px';
 
-      container.onclick = function(){
-        clear_map(true,true);
+        container.onclick = function () {
+            clear_map(true, true);
 
-        parameters.points.forEach(e => {
-            parameters.removePoint(e)
-        });
-      }
+            parameters.points.forEach(e => {
+                parameters.removePoint(e)
+            });
+        }
 
-      return container;
+        return container;
     }
-  });
+});
 
-  leaflet_map.addControl(new customControl());
+leaflet_map.addControl(new customControl());
 // Script for adding marker on map click
 leaflet_map.on('click', on_map_click);
 
@@ -451,16 +451,11 @@ window.import_to_route = function import_to_route(event) {
 /**
  * Starts algorithm
  */
-window.start_algorithm = function start_algorithm() {
-
-
-    //if distanceMatrix already exists (ex. Import), use that, otherwise create new
-    
+window.start_algorithm = async function start_algorithm() {
 
     //initiate algorithm
-    start(parameters);
-    draw_route(route);
-
+    sessionStorage.setItem('algorithm_status', "running");
+    optimize(parameters);
 
     //update bottom button section
     window.document.getElementById("start-start").style.display = "none";
@@ -474,12 +469,14 @@ window.start_algorithm = function start_algorithm() {
 window.pause_algorithm = function pause_algorithm() {
 
     //sets processControl to pause algorithm
-    pause();
+    sessionStorage.setItem('algorithm_status', "pause");
+
 
     //update bottom button section
     window.document.getElementById("stop-pause").style.display = "none";
     window.document.getElementById("stop-resume").style.display = "flex";
     window.document.getElementById("export-start").style.display = "none";
+    //return new Promise(resolve =>  btn.onclick = () => resolve());
 }
 
 /**
@@ -488,7 +485,7 @@ window.pause_algorithm = function pause_algorithm() {
 window.resume_algorithm = function resume_algorithm() {
 
     //sets processControl to resume algroithm
-    resume();
+    sessionStorage.setItem('algorithm_status', "running");
 
     //update bottom button section
     window.document.getElementById("stop-pause").style.display = "flex";
@@ -501,17 +498,8 @@ window.resume_algorithm = function resume_algorithm() {
  */
 window.stop_algorithm = function stop_algorithm() {
 
-    //clears map of routes
-    clear_map(false, true);
-
     //sets processControl to stop algorithm
-    stop();
-
-    //update bottom button section
-    window.document.getElementById("stop-pause").style.display = "none";
-    window.document.getElementById("stop-resume").style.display = "none";
-    window.document.getElementById("start-start").style.display = "flex";
-    window.document.getElementById("export-start").style.display = "none";
+    sessionStorage.setItem('algorithm_status', "stop");
 }
 
 /**
