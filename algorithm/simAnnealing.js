@@ -15,45 +15,37 @@ import {get_status } from "../processControl/controlElements.js";
     }
 
     export async function optimize(startingRoute, points, frequency) {
-        var temperature = 100;
+        var temperature = points.length * 100;
+        var start_temperature = structuredClone(temperature);
         var coolingFactor = 0.995;
         var currentRoute = startingRoute.duplicate();
 
 
-        while(temperature > 0.1) {
+        while(temperature > 0.001) {
 
             await sleep(1);
 
             if(get_status() == 'running') {
-            //    var indexOfPointA = Math.floor(Math.random()*points.length);
+  
                 var indexOfPointA = 0;
                 var indexOfPointB = 0;
-                // if (Math.random < 0.5) {
-                //     if (indexOfPointA == 0) {indexOfPointB = points.length - 1;} 
-                //     else {indexOfPointB = indexOfPointA - 1;}
-                // } else {
-                //     if (indexOfPointA == points.length -1) {indexOfPointB = 0;}
-                //     else {indexOfPointB = indexOfPointA + 1;}
-                // }
+
                 
                 while(indexOfPointA == indexOfPointB) {
                     indexOfPointA = Math.floor(Math.random()*points.length);
                     indexOfPointB = Math.floor(Math.random()*points.length);
-                    // console.log('A: ' + indexOfPointA);
-                    // console.log('B: ' + indexOfPointB);
+
                 }
 
                 var newRoute = currentRoute.duplicate();
 
                 newRoute.swapPoints(indexOfPointA, indexOfPointB);
-                // console.log('\n' + 'Current Route: ' + currentRoute.getLength());
-                // console.log('\n' + 'Neue Route: ' + newRoute.getLength());
-                // console.log('\n' + 'Angenommen:');
+  
                 if(newRoute.getLength() < currentRoute.getLength()) {
                     currentRoute = newRoute;
-                    // console.log('Ja, weil kürzer');
+
                 } else {
-                    var difference = (currentRoute.getLength() - newRoute.getLength())/currentRoute.getLength()*100;
+                    var difference = ((currentRoute.getLength() - newRoute.getLength())/(currentRoute.getLength() + newRoute.getLength()))*start_temperature;
                     var probabilityFactor = Math.exp(difference / temperature);
                     console.log('Differenz:' + difference);
                     console.log('Temperatur:' + temperature);
