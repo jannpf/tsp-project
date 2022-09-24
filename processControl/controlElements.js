@@ -2,9 +2,9 @@ import { optimize } from "../algorithm/simAnnealing.js";
 
 var status = 'stopped';
 
-export function start(route, points, frequency) {
+export function start(paramters) {
     status = 'running';
-    optimize(route, points, frequency);
+    optimize(paramters);
 }
 
 export function pause() {
