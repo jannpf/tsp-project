@@ -23,13 +23,13 @@ import {stop } from "../processControl/controlElements.js";
             var startingRoute = new Route(parameters.points, parameters.distanceMatrix)
         }
 
-        var temperature = parameters.points.length*100;
+        var temperature = parameters.points.length*10;
         var start_temperature = structuredClone(temperature);
         var coolingFactor = 0.995;
         var currentRoute = startingRoute.duplicate();
+        var iterations = 0;
 
-
-        while(temperature > 0.001) {
+        while(temperature > 0) {
 
             await sleep(1);
 
@@ -48,9 +48,10 @@ import {stop } from "../processControl/controlElements.js";
   
                 if(newRoute.getLength() < currentRoute.getLength()) {
                     currentRoute = newRoute;
+                    iterations = 0;
                 } else {
-                    var difference = ((currentRoute.getLength() - newRoute.getLength())/(currentRoute.getLength() + newRoute.getLength()))*start_temperature;
-                    var probabilityFactor = Math.exp(difference / temperature);
+                    var difference = ((currentRoute.getLength() - newRoute.getLength())/(parameters.averageDistance))**2;
+                    var probabilityFactor = Math.exp(-1*difference / temperature);
                     console.log('Differenz:' + difference);
                     console.log('Temperatur:' + temperature);
                     console.log('Faktor:' + probabilityFactor);
@@ -58,8 +59,10 @@ import {stop } from "../processControl/controlElements.js";
 
                     if(probabilityFactor > Math.random()) {
                         currentRoute = newRoute;
-                        // console.log('Ja, weil Faktor');
-                        //console.log(probabilityFactor);
+                        iterations = 0;
+                    } else {
+                        iterations++;
+                        console.log(iterations);
                     }
                 }
 
@@ -69,9 +72,13 @@ import {stop } from "../processControl/controlElements.js";
                 draw_route(currentRoute, temperature);
                 await sleep(100-sessionStorage.getItem('frequency'));
 
+                if (iterations > parameters.points.length**2) {
+                    break;
+                }
+
             } else if (get_status() == 'stopped') {
                break;
-            }
+            } 
             
         }
         if (get_status() !== 'stopped'){
