@@ -510,7 +510,7 @@ window.stop_algorithm = function stop_algorithm() {
 export function finish_algorithm(r) {
 
     //defines the final route to prepare for export
-    export_route = new Route(r.points, r.distanceMatrix);
+    export_route = r;
 
     //update bottom button section
     window.document.getElementById("stop-pause").style.display = "none";
