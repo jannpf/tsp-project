@@ -2,10 +2,7 @@ import Parameters from "../data_models/Parameters.js";
 import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
 import { optimize } from "../algorithm/simAnnealing.js";
-import { start } from "../processControl/controlElements.js";
-import { pause } from "../processControl/controlElements.js";
-import { resume } from "../processControl/controlElements.js";
-import { stop } from "../processControl/controlElements.js";
+
 
 /**
  * 
