@@ -3,13 +3,22 @@ import Point from "../data_models/Point.js";
 import Route from "../data_models/Route.js";
 import { optimize } from "../algorithm/simAnnealing.js";
 
-
 /**
- * 
- * Setup of the Leaflet map and needed gloabl variables
- * 
+ * Initiates slider and import-modal
  */
+window.addEventListener('load', () => {
+    change_slider();
 
+    return window.import_modal = document.getElementById("import-modal");
+})
+
+
+//needed gloabl variables
+var polyline = L.Layer;
+var markers = new Array;
+const parameters = new Parameters();
+var export_route = "";
+var map_blocker = false;
 
 
 //layer openstreetmap
@@ -41,26 +50,25 @@ var leaflet_map = L.map('leaflet-map', {
 //layer-control to decide between base-maps
 var layerControl = L.control.layers(baseMaps).addTo(leaflet_map);
 
+
+//adds a custom button as part of the map to delete all markers
 var customControl = L.Control.extend({
     options: {
-        position: 'topleft'
+        position: 'bottomright'
     },
 
     onAdd: function (leaflet_map) {
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
 
         container.style.backgroundColor = 'white';
-        container.style.backgroundImage = "url(http://t1.gstatic.com/images?q=tbn:ANd9GcR6FCUMW5bPn8C4PbKak2BJQQsmC-K9-mbYBeFZm1ZM2w2GRy40Ew)";
+        container.style.backgroundImage = 'url(../assets/delete.png)';
         container.style.backgroundSize = "30px 30px";
         container.style.width = '30px';
         container.style.height = '30px';
 
         container.onclick = function () {
-            clear_map(true, true);
-
-            parameters.points.forEach(e => {
-                parameters.removePoint(e)
-            });
+            map_blocker = true;
+            delete_all();
         }
 
         return container;
@@ -71,21 +79,18 @@ leaflet_map.addControl(new customControl());
 // Script for adding marker on map click
 leaflet_map.on('click', on_map_click);
 
-//needed gloabl variables
-var polyline = L.Layer;
-var markers = new Array;
-const parameters = new Parameters();
-var export_route = "";
-
-
 /**
- * Initiates slider and import-modal
+ * deletes all points contained in parameters to reset the map
  */
-window.addEventListener('load', () => {
-    change_slider();
+window.delete_all = function delete_all() {
 
-    return window.import_modal = document.getElementById("import-modal");
-})
+    //method to delete an array (resolves problems with self-referencing object propertys)
+    parameters.points.splice(0, parameters.points.length)
+
+    clear_map(true, true);
+
+    draw_parameters_points(parameters);
+}
 
 /**
  * Syncs Slider Text and Bar
@@ -203,6 +208,8 @@ function draw_parameters_points(param) {
     param.points.forEach(p => {
         draw_point(p.x, p.y, p.id);
     });
+
+    console.log(parameters);
 }
 
 /**
@@ -243,7 +250,7 @@ export function draw_route(r, t) {
 function on_map_click(e) {
 
     //prevents addpoint if the modal is open, closes it instead
-    if (import_modal.style.display == "none") {
+    if (import_modal.style.display == "none" && map_blocker == false) {
 
         //initiates last_id
         var last_id = 0;
@@ -262,6 +269,7 @@ function on_map_click(e) {
         //redraws all points saved in parameters
         draw_parameters_points(parameters);
     } else {
+        map_blocker = false;
         //close modal
         close_import();
     }
@@ -379,14 +387,11 @@ window.open_file = function open_file(ev) {
  */
 function readfile(file) {
 
-
     //confirms that the file is a csv file, @throws {Invalid File} Error otherwise
     if (file.type == "text/csv") {
 
-        //resets parameter points to correctly save the imported
-        parameters.points.forEach(e => {
-            parameters.removePoint(e)
-        });
+        //delets all parameter points to correctly save the imported
+        delete_all();
 
         //initiates new FileReader
         let reader = new FileReader();
@@ -395,7 +400,6 @@ function readfile(file) {
         //imports points in try-catch-block to catch errors thrown by .importPoints()
         reader.onload = function (e) {
             try {
-                parameters.importPoints(e.target.result);
 
                 //GUI: informs user about the correctly uploaded file
                 window.document.getElementById("import-modal-upload").style.display = "flex";
@@ -425,11 +429,8 @@ function readfile(file) {
 window.import_to_route = function import_to_route(event) {
 
     //delete existing markers from map
-    if (markers.length !== 0) {
-        markers.forEach(e => {
-            leaflet_map.removeLayer(e);
-        });
-    }
+    clear_map(true, true);
+
     //delete existing route from map
     if (leaflet_map.hasLayer(polyline)) { leaflet_map.removeLayer(polyline) };
 
