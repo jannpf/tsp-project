@@ -8,6 +8,8 @@ import { optimize } from "../algorithm/simAnnealing.js";
  */
 window.addEventListener('load', () => {
     change_slider();
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d")
 
     return window.import_modal = document.getElementById("import-modal");
 })
@@ -19,7 +21,9 @@ var markers = new Array;
 const parameters = new Parameters();
 var export_route = "";
 var map_blocker = false;
-
+var canvas = "";
+var ctx = "";
+var temp_list = new Array;
 
 //layer openstreetmap
 var osm = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
@@ -238,9 +242,17 @@ export function draw_route(r, t) {
     //draws route onto map via. polyline
     polyline = L.polyline(result, { color: "#676767" }).addTo(leaflet_map);
 
+    temp_list.push(t);
+    update_canvas(temp_list);
+
     //GUI: ouput length and temperature
-    window.document.getElementById("length-text").innerText = Math.round((r.getLength() + Number.EPSILON) * 100) / 100 + " km";
-    window.document.getElementById("temperature-text").innerText = Math.round((t + Number.EPSILON) * 100) / 100;
+    window.document.getElementById("length-text").innerText = Math.round((r.getLength() + Number.EPSILON) * 10) / 10 + " km";
+
+    let t_out;
+
+    t > 0.001 ? t_out = Math.round((t + Number.EPSILON) * 1000) / 1000 : t_out = Number.parseFloat(t).toExponential(2);
+
+    window.document.getElementById("temperature-text").innerText = t_out;
 }
 
 /**
@@ -250,7 +262,7 @@ export function draw_route(r, t) {
 function on_map_click(e) {
 
     //prevents addpoint if the modal is open, closes it instead
-    if (import_modal.style.display == "none" && map_blocker == false) {
+    if (import_modal.style.display !== "flex" && map_blocker == false) {
 
         //initiates last_id
         var last_id = 0;
@@ -401,6 +413,8 @@ function readfile(file) {
         reader.onload = function (e) {
             try {
 
+                parameters.importPoints(e.target.result);
+
                 //GUI: informs user about the correctly uploaded file
                 window.document.getElementById("import-modal-upload").style.display = "flex";
                 window.document.getElementById("import-placeholder").textContent = "Super!";
@@ -452,8 +466,12 @@ window.import_to_route = function import_to_route(event) {
 window.start_algorithm = async function start_algorithm() {
 
     //initiate algorithm
+    if (parameters.points.length == 0) {return}
+
+    temp_list = [];
     sessionStorage.setItem('algorithm_status', "running");
     optimize(parameters);
+
 
     //update bottom button section
     window.document.getElementById("start-start").style.display = "none";
@@ -533,4 +551,60 @@ window.export_solution = function export_solution() {
     //simulates a click on the element and then delets it
     element.click();
     document.body.removeChild(element);
+}
+
+
+/**
+ * Takes an Array of Algorithm Temperatures as an input and draws a Graph of the development
+ * @param {Array} temp_list List of Temperatures
+ */
+function update_canvas(temp_list) {
+
+    //get canvas size
+    const canvas_w = canvas.width;
+    const canvas_h = canvas.height;
+
+    //clears canvas
+    ctx.clearRect(0, 0, canvas_w, canvas_h);
+
+    //draws x and y axis onto canvas
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(2, 0);
+    ctx.lineTo(2, canvas_h - 2);
+    ctx.lineTo(canvas_w, canvas_h - 2);
+    ctx.stroke();
+
+    //get max and min temperature in Array
+    let max = Math.max.apply(null, temp_list)
+    let min = Math.round((Math.min.apply(null, temp_list) + Number.EPSILON) * 1000) / 1000;
+
+    //get offset between two points on the x axis based on canvas width
+    let offset_x = (canvas_w - 2) / temp_list.length;
+
+    //graph grows from bottom, more visually appealing
+    let offset_y = (canvas_h - 2) / (max - min);
+
+    //OPTION 2: graph grows from top
+    //let offset_y = (canvas_h - 2) / (max - 0);
+
+    //set style for stroke
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+
+    //calculate the location for each point on the canvas and connect the points
+    for (let i = 0; i < temp_list.length; i++) {
+
+        if (i == 0) ctx.moveTo(2, 0);
+
+        let position_x = offset_x * i;
+        let position_y = offset_y * (max - temp_list[i])
+
+        ctx.lineTo(position_x, position_y);
+    }
+
+    //draw acutal stroke onto canvas
+    ctx.stroke();
 }

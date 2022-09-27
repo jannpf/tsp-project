@@ -11,6 +11,8 @@ body {
   /* Hide horizontal scrollbar */
 }
 
+
+
 #leaflet-map {
   height: 78vh;
   width: 100%;
@@ -96,19 +98,16 @@ body {
 }
 
 .menu-bar-bottom {
-  width: 100%;
+  width: 90%;
   height: 18vh;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   position: absolute;
-  align-self: center;
-  box-sizing: border-box;
   align-items: center;
   flex: 1, 1;
   border-color: transparent;
   padding: 0px;
-  gap: 2vw;
   margin-bottom: 2vh;
   bottom: 0;
 }
@@ -125,7 +124,7 @@ body {
   height: 15vh;
   display: flex;
   position: relative;
-  flex-grow: 0;
+  flex: 1,1;
   box-sizing: border-box;
   border-color: transparent;
   margin-bottom: 0;
@@ -139,7 +138,7 @@ body {
   align-items: center;
   gap: 1vw;
   width: 100%;
-  height: 5vh;
+  height: 8vh;
   position: relative;
   border-color: transparent;
   background-color: #263238;
@@ -149,6 +148,7 @@ body {
 }
 
 .import-text {
+  
   color: rgba(255, 255, 255, 1);
   font-size: 3vh;
   align-self: center;
@@ -178,7 +178,7 @@ body {
   position: fixed;
   z-index: 1;
   left: 50%;
-  top: 50%;
+  top: 45%;
   transform: translate(-50%, -50%);
   width: 25vw;
   height: 50vh;
@@ -499,7 +499,7 @@ input[type="number"]:focus {
 }
 
 .button-tab {
-  margin: 3.5vh;
+  margin: 3.5vh 0px;
 }
 
 .one-item-tab {
@@ -572,74 +572,47 @@ input[type="number"]:focus {
 }
 
 
-
-
-
-
-
 .output-tab {
-  flex: 0, 0;
   width: 20vw;
   height: 17vh;
   display: flex;
-  padding: var(--dl-space-space-halfunit);
   position: relative;
-  box-sizing: border-box;
-  align-items: flex-end;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
   flex-direction: column;
   justify-content: flex-end;
 }
 
 .output-tab-numbers {
   display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 2vw;
+  height: 7vh;
   position: relative;
-  align-self: stretch;
-  box-sizing: border-box;
-  align-items: stretch;
-  flex-shrink: 0;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
   margin-bottom: 10px;
 }
 
-.temperature-tab {
-  width: 50%;
+
+.o-tab {
   display: flex;
   position: relative;
-  flex-grow: 1;
-  box-sizing: border-box;
   align-items: flex-start;
-  flex-shrink: 0;
-  border-color: transparent;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0px;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.temperature-label {
+.o-label {
   display: flex;
+  flex-direction: row;
   position: relative;
-  box-sizing: border-box;
   align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
+  justify-content: flex-start;
   margin-bottom: 5px;
 }
 
-.text16 {
-  color: var(--dl-color-black-200);
-  height: auto;
+.o-text {
+  color: #263238;
   font-size: 14px;
-  align-self: auto;
   font-style: Medium;
-  text-align: left;
   font-family: Poppins;
   font-weight: 500;
   line-height: normal;
@@ -649,16 +622,14 @@ input[type="number"]:focus {
   text-decoration: none;
 }
 
-.temperature-help {
+.help {
   width: 16px;
   height: 16px;
   position: relative;
-  box-sizing: border-box;
-  margin-right: 0;
-  margin-bottom: 0;
+  align-self: center;
 }
 
-.temperature-text {
+.o-display {
   color: var(--dl-color-red-red);
   height: auto;
   font-size: 22px;
@@ -675,196 +646,22 @@ input[type="number"]:focus {
   white-space: nowrap;
 }
 
-.length-tab {
-  width: 50%;
-  display: flex;
-  position: relative;
-  flex-grow: 1;
-  align-self: flex-start;
-  box-sizing: border-box;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.length-label {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 5px;
-}
-
-.text20 {
-  color: var(--dl-color-black-200);
-  height: auto;
-  font-size: 16px;
-  align-self: auto;
-  font-style: Medium;
-  text-align: left;
-  font-family: Poppins;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  margin-right: 5px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-
-.length-help {
-  width: 16px;
-  height: 16px;
-  position: relative;
-  box-sizing: border-box;
-  margin-right: 0;
-  margin-bottom: 0;
-}
-
-.length-text {
-  color: var(--dl-color-black-200);
-  height: auto;
-  font-size: 22px;
-  align-self: auto;
-  font-style: Medium;
-  text-align: left;
-  font-family: Poppins;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  margin-right: 0;
-  margin-bottom: 0;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
 .chart-tab {
+  height: 10vh;
+  width: 100%;
   display: flex;
-  position: relative;
-  align-self: stretch;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
   flex-direction: column;
-}
-
-.chart-label {
-  display: flex;
   position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0px;
 }
 
-.text24 {
-  color: var(--dl-color-black-200);
-  height: auto;
-  font-size: 16px;
-  align-self: auto;
-  font-style: Medium;
-  text-align: left;
-  font-family: Poppins;
-  font-weight: 500;
-  line-height: normal;
-  font-stretch: normal;
-  margin-right: 10px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
 
-.chart-help {
-  width: 16px;
-  height: 16px;
+#canvas{
   position: relative;
-  box-sizing: border-box;
-  margin-right: 0;
-  margin-bottom: 0;
+  width: 100%;
+  height: 7vh;
+  flex: 0,0;
 }
 
-.o-u-t-chart {
-  width: 339px;
-  height: 60px;
-  display: flex;
-  padding: 0;
-  position: relative;
-  align-self: stretch;
-  box-sizing: border-box;
-  align-items: flex-start;
-  flex-shrink: 1;
-  border-color: transparent;
-  border-style: none;
-  border-width: 0;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  flex-direction: row;
-  justify-content: flex-start;
-  background-color: transparent;
-}
-
-.xaxis {
-  top: 59.900146484375px;
-  left: 0.35836556553840637px;
-  width: 339px;
-  height: 0px;
-  position: absolute;
-  box-sizing: border-box;
-  border-color: var(--dl-color-gray-black);
-  border-width: 1px;
-  border-radius: var(--dl-radius-radius-radius4);
-}
-
-.yaxis {
-  top: 0px;
-  left: 0.35836556553840637px;
-  width: 0px;
-  height: 60px;
-  position: absolute;
-  box-sizing: border-box;
-  border-color: var(--dl-color-gray-black);
-  border-width: 1px;
-}
-
-.line {
-  top: 4.4925079345703125px;
-  left: 0.35836556553840637px;
-  width: 339px;
-  height: 55px;
-  position: absolute;
-  box-sizing: border-box;
-}
-
-
-
-.navbar-inner-right {
-  height: 3vh;
-}
-
-.navbar-inner-editor {
-  width: 12vw;
-  height: 3vh;
-  min-width: 12vw;
-  min-height: 5vh;
-  justify-content: flex-start;
-}
-
-.navbar-inner-editor-button {
-  width: 12vw;
-  height: 5vh;
-}
 
 .text08 {
   left: 0px;
@@ -900,40 +697,3 @@ input[type="number"]:focus {
   align-self: center;
 }
 
-.input-tab {
-  margin-top: 2vh;
-  align-items: flex-start;
-  margin-left: 2vw;
-  margin-right: 2vw;
-  margin-bottom: 0vh;
-  justify-content: flex-end;
-}
-
-.import-tab {
-  height: 5vh;
-  min-height: 5vh;
-  align-items: flex-end;
-}
-
-.b-u-t-t-o-n-import-button {
-  height: 5vh;
-}
-
-.import-button-label {
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  height: 5vh;
-  margin: auto;
-  min-height: 5vh;
-}
-
-.start-tab {
-  min-height: 10vh;
-}
-
-.b-u-t-t-o-n-start-button {
-  width: 100%;
-  margin: 0px;
-}

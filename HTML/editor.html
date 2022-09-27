@@ -30,16 +30,13 @@
         <div>
             <div class="map-editorv4">
                 <div id="leaflet-map"></div>
-
-                <!--<div id="map-frame" class="map-frame">
-                    <canvas id="canvas" onmousedown="click_canvas(event)"></canvas> 
-                </div>-->
                 <div class="menu-bar-bottom">
                     <div class="input-tab">
                         <div id="import-tab" class="import-tab" onclick="import_file(event)">
                             <span class="import-text"><span>Import</span></span>
                             <img src="../assets/Import-Icon-Vektor.svg" class="import-icon-vector" />
                         </div>
+
                         <!-- The Modal -->
                         <div id="import-modal" class="modal">
                             <div class="import-modal-header">
@@ -64,7 +61,7 @@
                         <div class="frequency-tab">
                             <div class="frequency-label">
                                 <span class="text12"><span>Frequenz</span></span>
-                                <img src="../assets/Tooltip-Icon.svg" class="frequency-help" />
+                                <img src="../assets/Tooltip-Icon.svg" class="help" />
                             </div>
                             <div class="frequency-slider">
                                 <input type="range" id="my-slider" min="0" max="100" value="50"
@@ -93,44 +90,45 @@
 
                     </div>
                     <div class="output-tab">
+
                         <div class="output-tab-numbers">
-                            <div class="temperature-tab">
-                                <div class="temperature-label">
-                                    <span class="text16"><span>Temperatur</span></span>
-                                    <img src="../assets/Tooltip-Icon.svg" class="temperature-help" />
+
+                            <div class="o-tab">
+                                <div class="o-label">
+                                    <span class="o-text"><span>Temperatur</span></span>
+                                    <img src="../assets/Tooltip-Icon.svg" class="help" />
                                 </div>
-                                <span class="temperature-text"><span id="temperature-text">0</span></span>
+                                <span class="o-display"><span id="temperature-text">0</span></span>
                             </div>
-                            <div class="length-tab">
-                                <div class="length-label">
-                                    <span class="text20"><span>Länge</span></span>
-                                    <img src="../assets/Tooltip-Icon.svg" class="length-help" />
+
+                            <div class="o-tab">
+                                <div class="o-label">
+                                    <span class="o-text"><span>Länge</span></span>
+                                    <img src="../assets/Tooltip-Icon.svg" class="help" />
                                 </div>
-                                <span class="length-text"><span id="length-text">0</span></span>
+                                <span class="o-display"><span id="length-text">0</span></span>
                             </div>
+
                         </div>
+
+
                         <div class="chart-tab">
-                            <div class="chart-label">
-                                <span class="text24">
+
+                            <div class="o-label">
+                                <span class="o-text">
                                     <span>Temperatur Verlauf</span>
                                 </span>
-                                <img src="../assets/Tooltip-Icon.svg" class="chart-help" />
+                                <img src="../assets/Tooltip-Icon.svg" class="help" />
                             </div>
-                            <div class="o-u-t-chart">
-                                <img src="" class="xaxis" />
-                                <img alt="Yaxis3494" src="../assets/yaxis3494-2qch.svg" class="yaxis" />
-                                <img alt="Line3494" src="../assets/line3494-w0pg.svg" class="line" />
-                            </div>
+                            <canvas id="canvas"></canvas>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
     <script type="module" src="../data_models/Parameters.js"></script>
     <script type="module" src="../data_models/Route.js"></script>
