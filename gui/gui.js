@@ -457,6 +457,11 @@ window.import_to_route = function import_to_route(event) {
 
     //draw imported points onto map from parameters
     draw_parameters_points(parameters);
+
+    var markers_feature = new L.featureGroup(markers)
+
+    leaflet_map.flyToBounds(markers_feature.getBounds())
+
 }
 
 
@@ -466,7 +471,7 @@ window.import_to_route = function import_to_route(event) {
 window.start_algorithm = async function start_algorithm() {
 
     //initiate algorithm
-    if (parameters.points.length == 0) {return}
+    if (parameters.points.length == 0) { return }
 
     temp_list = [];
     sessionStorage.setItem('algorithm_status', "running");
